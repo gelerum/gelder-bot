@@ -25,10 +25,12 @@ func newClient() *client {
 
 var c *client
 
-func InitClient() {
-	c = newClient()
-}
-
 func GetClient() *client {
+	if c != nil {
+		return c
+	}
+
+	c = newClient()
+
 	return c
 }

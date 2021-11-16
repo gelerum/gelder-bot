@@ -34,10 +34,12 @@ func newBot() *bot {
 
 var b *bot
 
-func InitBot() {
-	b = newBot()
-}
-
 func GetBot() *bot {
+	if b != nil {
+		return b
+	}
+
+	b = newBot()
+
 	return b
 }
