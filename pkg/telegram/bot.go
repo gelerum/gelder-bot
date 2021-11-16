@@ -12,7 +12,7 @@ type bot struct {
 
 func newBot() *bot {
 	var (
-		port  = os.Getenv("WEBHOOKS_PORT")
+		port  = os.Getenv("PORT")
 		url   = os.Getenv("WEBHOOKS_URL")
 		token = os.Getenv("BOT_TOKEN")
 	)
