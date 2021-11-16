@@ -12,12 +12,12 @@ func (c client) CreateUserDocument(chatID int) {
 	coll := c.client.Database(os.Getenv("DATABASE_NAME")).Collection("USED_COLLECTION")
 	fmt.Println(coll)
 	count, _ := coll.CountDocuments(context.TODO(), bson.D{{"chatID", chatID}})
-	fmt.Println(count)
+	fmt.Println(count, "my count")
 	if count != 1 {
 		document := bson.D{{"chatID", chatID}, {"expenses", bson.A{}}, {"income", bson.A{}}}
-		fmt.Println(document)
+		fmt.Println(document, "docicici")
 		_, err := coll.InsertOne(context.TODO(), document)
-		fmt.Println(err)
+		fmt.Println(err, "my error")
 	}
 }
 
