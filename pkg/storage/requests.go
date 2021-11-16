@@ -17,7 +17,7 @@ func (c client) CreateUserDocument(chatID int) {
 		document := bson.D{{"chatID", chatID}, {"expenses", bson.A{}}, {"income", bson.A{}}}
 		fmt.Println(document)
 		_, err := coll.InsertOne(context.TODO(), document)
-		fmt.Println(err))
+		fmt.Println(err)
 	}
 }
 
