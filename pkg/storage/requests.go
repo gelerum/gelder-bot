@@ -25,5 +25,5 @@ func (c client) AddPosition(chatID int, amount float64, category string, kind st
 	filter := bson.D{{"chatID", chatID}}
 	update := bson.M{"$push": bson.M{kind: bson.E{category, amount}}}
 	_, err := coll.UpdateOne(context.TODO(), filter, update)
-	fmt.Print(err)
+	fmt.Print(err, "error here")
 }

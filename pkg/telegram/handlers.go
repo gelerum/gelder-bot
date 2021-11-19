@@ -35,16 +35,16 @@ func (b *bot) HandleMessage(message *tb.Message) {
 	}
 	category := amountCategoryKind[1]
 	kind := strings.ToLower(amountCategoryKind[2])
-	if kind == "expenses" && ValidateCategory(category, kind) {
+	if kind == "expenses" && ifValidCategory(category, kind) {
 		storage.GetClient().AddPosition(message.Sender.ID, amount, category, kind)
-	} else if kind == "income" && ValidateCategory(category, kind) {
+	} else if kind == "income" && ifValidCategory(category, kind) {
 		storage.GetClient().AddPosition(message.Sender.ID, amount, category, kind)
 	} else {
-		b.Bot.Send(message.Sender, "Use expense or income. Example: 150.99 food expense. /categories - list of supported categories")
+		b.Bot.Send(message.Sender, "Use expense or income. Example: 150.99 food expenses. /categories - list of supported categories")
 	}
 }
 
-func ValidateCategory(category string, kind string) bool {
+func ifValidCategory(category string, kind string) bool {
 	expensesCategories := [5]string{
 		"food",
 		"transportation",
