@@ -20,6 +20,7 @@ func (b *bot) HandleStart(message *tb.Message) {
 }
 
 func (b *bot) HandleCategories(message *tb.Message) {
+	fmt.Print(0)
 	b.Bot.Send(message.Sender, "Expenses:\n    1. Food\n    2. Transportation\n    3. Savings\n    4. Subscribtions\n    5. Others\n\nIncome: \n    1. Job\n    2. Freelancing\n    3. Buisness\n    4. Cashback\n    5. Others")
 }
 
