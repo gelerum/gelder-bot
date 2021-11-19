@@ -1,7 +1,6 @@
 package telegram
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -20,7 +19,6 @@ func (b *bot) HandleStart(message *tb.Message) {
 }
 
 func (b *bot) HandleCategories(message *tb.Message) {
-	fmt.Print(0)
 	b.Bot.Send(message.Sender, "Expenses:\n    1. Food\n    2. Transportation\n    3. Savings\n    4. Subscribtions\n    5. Others\n\nIncome: \n    1. Job\n    2. Freelancing\n    3. Buisness\n    4. Cashback\n    5. Others")
 }
 
@@ -38,10 +36,8 @@ func (b *bot) HandleMessage(message *tb.Message) {
 	category := amountCategoryKind[1]
 	kind := strings.ToLower(amountCategoryKind[2])
 	if kind == "expenses" && isCategoryValid(category, kind) {
-		fmt.Print(1)
 		storage.GetClient().AddPosition(message.Sender.ID, amount, category, kind)
 	} else if kind == "income" && isCategoryValid(category, kind) {
-		fmt.Print(2)
 		storage.GetClient().AddPosition(message.Sender.ID, amount, category, kind)
 	} else {
 		b.Bot.Send(message.Sender, "Use expense or income. Example: 150.99 food expenses. /categories - list of supported categories")
