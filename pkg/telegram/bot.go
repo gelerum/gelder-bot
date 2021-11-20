@@ -10,36 +10,25 @@ type bot struct {
 	Bot *tb.Bot
 }
 
-func newBot() *bot {
+func NewBot() (*bot, error) {
 	var (
 		port  = os.Getenv("PORT")
-		url   = os.Getenv("WEBHOOKS_URL")
-		token = os.Getenv("BOT_TOKEN")
+		url   = os.Getenv("URL")
+		token = os.Getenv("TOKEN")
 	)
-
 	webhook := &tb.Webhook{
 		Listen:   ":" + port,
 		Endpoint: &tb.WebhookEndpoint{PublicURL: url},
 	}
-
 	preferencies := tb.Settings{
 		Token:  token,
 		Poller: webhook,
 	}
-	newBot, _ := tb.NewBot(preferencies)
+	newBot, err := tb.NewBot(preferencies)
+	if err != nil {
+		return nil, err
+	}
 	return &bot{
 		Bot: newBot,
-	}
-}
-
-var b *bot
-
-func GetBot() *bot {
-	if b != nil {
-		return b
-	}
-
-	b = newBot()
-
-	return b
+	}, nil
 }

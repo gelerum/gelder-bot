@@ -10,27 +10,24 @@ import (
 )
 
 type client struct {
-	client *mongo.Client
+	Client *mongo.Client
+	Coll   *mongo.Collection
 }
 
-func newClient() *client {
-	mongoClient, _ := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+func NewClient() (*client, error) {
+	newClient, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+	if err != nil {
+		return nil, err
+	}
 	mongoContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	mongoClient.Connect(mongoContext)
+	err = newClient.Connect(mongoContext)
+	if err != nil {
+		return nil, err
+	}
+	coll := newClient.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("USED_COLLECTION"))
 	return &client{
-		client: mongoClient,
-	}
-}
-
-var c *client
-
-func GetClient() *client {
-	if c != nil {
-		return c
-	}
-
-	c = newClient()
-
-	return c
+		Client: newClient,
+		Coll:   coll,
+	}, nil
 }
