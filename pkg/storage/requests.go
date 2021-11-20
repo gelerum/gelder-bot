@@ -28,5 +28,5 @@ func (c client) GetData(chatID int) {
 	coll := c.client.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("USED_COLLECTION"))
 	var podcast bson.D
 	coll.FindOne(context.TODO(), bson.D{{"chatID", chatID}, {"expenses", bson.A{}}}).Decode(&podcast)
-	fmt.Print(podcast)
+	fmt.Print(podcast, "podcast")
 }
