@@ -25,7 +25,7 @@ func NewClient() (*client, error) {
 	if err != nil {
 		return nil, err
 	}
-	coll := newClient.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("USED_COLLECTION"))
+	coll := newClient.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("DATABASE_COLLECTION"))
 	return &client{
 		Client: newClient,
 		Coll:   coll,

@@ -12,16 +12,16 @@ type bot struct {
 
 func NewBot() (*bot, error) {
 	var (
-		port  = os.Getenv("PORT")
-		url   = os.Getenv("URL")
-		token = os.Getenv("TOKEN")
+		port     = os.Getenv("PORT")
+		appUrl   = os.Getenv("APP_URL")
+		botToken = os.Getenv("BOT_TOKEN")
 	)
 	webhook := &tb.Webhook{
 		Listen:   ":" + port,
-		Endpoint: &tb.WebhookEndpoint{PublicURL: url},
+		Endpoint: &tb.WebhookEndpoint{PublicURL: appUrl},
 	}
 	preferencies := tb.Settings{
-		Token:  token,
+		Token:  botToken,
 		Poller: webhook,
 	}
 	newBot, err := tb.NewBot(preferencies)
