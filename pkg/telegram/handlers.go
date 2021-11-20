@@ -23,7 +23,7 @@ func (b *bot) HandleCategories(message *tb.Message) {
 }
 
 func (b *bot) HandleGet(message *tb.Message) {
-	storage.GetClient().GetData(message.Sender.ID)
+	storage.GetClient().GetTransaction(message.Sender.ID)
 }
 
 func (b *bot) HandleMessage(message *tb.Message) {
@@ -40,9 +40,9 @@ func (b *bot) HandleMessage(message *tb.Message) {
 	category := amountCategoryKind[1]
 	kind := strings.ToLower(amountCategoryKind[2])
 	if kind == "expenses" && isCategoryValid(category, kind) {
-		storage.GetClient().AddPosition(message.Sender.ID, amount, category, kind)
+		storage.GetClient().AddTransaction(message.Sender.ID, amount, category, kind)
 	} else if kind == "income" && isCategoryValid(category, kind) {
-		storage.GetClient().AddPosition(message.Sender.ID, amount, category, kind)
+		storage.GetClient().AddTransaction(message.Sender.ID, amount, category, kind)
 	} else {
 		b.Bot.Send(message.Sender, "Use expense or income. Example: 150.99 food expenses. /categories - list of supported categories")
 	}
