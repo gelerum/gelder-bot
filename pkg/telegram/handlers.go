@@ -22,6 +22,10 @@ func (b *bot) HandleCategories(message *tb.Message) {
 	b.Bot.Send(message.Sender, "Expenses:\n    1. Food\n    2. Transportation\n    3. Savings\n    4. Subscribtions\n    5. Others\n\nIncome: \n    1. Job\n    2. Freelancing\n    3. Buisness\n    4. Cashback\n    5. Others")
 }
 
+func (b *bot) HandleGet(message *tb.Message) {
+	storage.GetClient().GetData(message.Sender.ID)
+}
+
 func (b *bot) HandleMessage(message *tb.Message) {
 	amountCategoryKind := strings.Fields(message.Text)
 	if len(amountCategoryKind) != 3 {
