@@ -19,7 +19,7 @@ func (c client) CreateUserDocument(chatID int) {
 func (c client) AddTransaction(chatID int, amount float64, category string, kind string) {
 	coll := c.client.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("USED_COLLECTION"))
 	filter := bson.D{{"chatID", chatID}}
-	update := bson.M{"$push": bson.M{kind: bson.E{category, amount}}}
+	update := bson.M{"$push": bson.M{kind: bson.D{{"category", category}, {"amount", amount}}}}
 	coll.UpdateOne(context.TODO(), filter, update)
 }
 
