@@ -4,7 +4,22 @@ import (
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
+
+type User struct {
+	ID       primitive.ObjectID `bson:"_id" json:"_id"`
+	ChatID   int                `bson:"chatID" json:"chatID"`
+	Expenses []interface{}      `bson:"expenses" json:"expenses"`
+	Income   []interface{}      `bson:"income" json:"income,"`
+}
+
+func (c client) Get(chatID int) *mongo.SingleResult {
+	filter := bson.D{{"chatID", chatID}}
+	a := c.Coll.FindOne(context.TODO(), filter)
+	return a
+}
 
 func (c client) CreateUserDocument(chatID int) error {
 	count, err := c.Coll.CountDocuments(context.TODO(), bson.D{{"chatID", chatID}})
