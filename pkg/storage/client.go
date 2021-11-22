@@ -11,7 +11,6 @@ import (
 
 type client struct {
 	Client *mongo.Client
-	Coll   *mongo.Collection
 }
 
 func NewClient() (*client, error) {
@@ -25,9 +24,7 @@ func NewClient() (*client, error) {
 	if err != nil {
 		return nil, err
 	}
-	coll := newClient.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("DATABASE_COLLECTION"))
 	return &client{
 		Client: newClient,
-		Coll:   coll,
 	}, nil
 }
