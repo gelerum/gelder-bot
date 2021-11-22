@@ -48,6 +48,8 @@ func main() {
 	})
 	bot.Bot.Handle("/get", func(m *tb.Message) {
 		a := client.Get(m.Sender.ID)
+		print(a)
+		bot.Bot.Send(m.Sender, "aadf")
 		bot.Bot.Send(m.Sender, a)
 	})
 	bot.Bot.Handle(tb.OnText, func(m *tb.Message) {
