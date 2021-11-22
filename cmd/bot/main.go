@@ -78,6 +78,7 @@ func main() {
 			bot.Bot.Send(m.Sender, "Use expense or income. Example: 150.99 food expenses. /categories - list of supported categories")
 		}
 	})
+	bot.Bot.Start()
 }
 func isCategoryValid(category string, kind string) bool {
 	expensesCategories := [5]string{
