@@ -47,7 +47,8 @@ func main() {
 		}
 	})
 	bot.Bot.Handle("/get", func(m *tb.Message) {
-		client.Get(m.Sender.ID)
+		a := client.Get(m.Sender.ID)
+		bot.Bot.Send(m.Sender, a)
 	})
 	bot.Bot.Handle(tb.OnText, func(m *tb.Message) {
 		amountCategoryKind := strings.Fields(m.Text)
