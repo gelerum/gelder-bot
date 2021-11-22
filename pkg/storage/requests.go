@@ -6,7 +6,6 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type User struct {
@@ -16,10 +15,11 @@ type User struct {
 	Income   []interface{}      `bson:"income" json:"income,"`
 }
 
-func (c client) Get(chatID int) *mongo.SingleResult {
+func (c client) Get(chatID int) bson.M {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
-	a := c.Coll.FindOne(context.TODO(), filter)
+	var a bson.M
+	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
 	fmt.Println("HEHEHEH")
 	fmt.Print(a, "HEREORG")
 	return a
