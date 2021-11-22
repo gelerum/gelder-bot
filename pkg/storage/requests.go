@@ -5,7 +5,6 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type User struct {
@@ -15,10 +14,10 @@ type User struct {
 	Income   []interface{}      `bson:"income" json:"income,"`
 }
 
-func (c client) Get(chatID int) *mongo.SingleResult {
+func (c client) Get(chatID int) {
 	filter := bson.D{{"chatID", chatID}}
 	a := c.Coll.FindOne(context.TODO(), filter)
-	return a
+	print(a)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
