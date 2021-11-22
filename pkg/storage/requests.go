@@ -18,7 +18,7 @@ type User struct {
 
 func (c client) Get(chatID int) *mongo.SingleResult {
 	fmt.Print(chatID)
-	filter := bson.D{{"chatID", chatID}}
+	filter := bson.M{"chatID": chatID}
 	a := c.Coll.FindOne(context.TODO(), filter)
 	fmt.Println("HEHEHEH")
 	fmt.Print(a, "HEREORG")
