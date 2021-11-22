@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -17,7 +18,7 @@ type User struct {
 func (c client) Get(chatID int) {
 	filter := bson.D{{"chatID", chatID}}
 	a := c.Coll.FindOne(context.TODO(), filter)
-	print(a)
+	fmt.Print(a)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
