@@ -22,7 +22,8 @@ func (c client) Get(chatID int) {
 	var b interface{}
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
 	c.Coll.FindOne(context.TODO(), filter).Decode(&b)
-	fmt.Println(a)
+	fmt.Println(a.ID)
+	fmt.Println(a.ChatID)
 	fmt.Println(b)
 }
 
