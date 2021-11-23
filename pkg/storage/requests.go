@@ -18,19 +18,14 @@ type User struct {
 func (c client) Get(chatID int) {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
-	var a interface{}
 	var sec User
 	var k string
 	var u map[string]interface{}
-	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
 	c.Coll.FindOne(context.TODO(), filter).Decode(&sec)
 	c.Coll.FindOne(context.TODO(), filter).Decode(&k)
 	c.Coll.FindOne(context.TODO(), filter).Decode(&u)
-	var d User
 	var t User
-	bson.Unmarshal([]byte(a.(string)), &d)
 	bson.Unmarshal([]byte(k), &t)
-	fmt.Println(d)
 	fmt.Println(t)
 	fmt.Println()
 	fmt.Println()
