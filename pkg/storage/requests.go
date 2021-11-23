@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -15,13 +16,16 @@ type User struct {
 	Income   []interface{}      `bson:"income" json:"income,"`
 }
 
-func (c client) Get(chatID int) bson.M {
+func (c client) Get(chatID int) {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
-	var a bson.M
+	var a []byte
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
-	fmt.Printf("Found a single document: %+v\n", a)
-	return a
+	fmt.Println(a)
+	var d User
+	err := json.Unmarshal([]byte(a), &d)
+	fmt.Println(err)
+	fmt.Println(d)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
