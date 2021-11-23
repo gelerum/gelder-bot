@@ -9,22 +9,19 @@ import (
 )
 
 type User struct {
-	ID       primitive.ObjectID `bson:"_id" json:"_id"`
-	ChatID   int                `bson:"chatID" json:"chatID"`
-	Expenses []interface{}      `bson:"expenses" json:"expenses"`
-	Income   []interface{}      `bson:"income" json:"income,"`
+	ID       primitive.ObjectID  `bson:"_id" json:"_id"`
+	ChatID   int                 `bson:"chatID" json:"chatID"`
+	Expenses map[int]interface{} `bson:"expenses" json:"expenses"`
+	Income   []interface{}       `bson:"income" json:"income,"`
 }
 
 func (c client) Get(chatID int) {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
 	var a User
-	var b interface{}
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
-	c.Coll.FindOne(context.TODO(), filter).Decode(&b)
-	fmt.Println(a.Expenses...)
+	fmt.Println(a.Expenses)
 	fmt.Println(a.Expenses[1])
-	fmt.Println(b)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
