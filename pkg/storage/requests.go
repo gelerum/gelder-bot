@@ -9,10 +9,10 @@ import (
 )
 
 type User struct {
-	ID       primitive.ObjectID  `bson:"_id" json:"_id"`
-	ChatID   int                 `bson:"chatID" json:"chatID"`
-	Expenses map[int]interface{} `bson:"expenses" json:"expenses"`
-	Income   []interface{}       `bson:"income" json:"income,"`
+	ID       primitive.ObjectID `bson:"_id" json:"_id"`
+	ChatID   int                `bson:"chatID" json:"chatID"`
+	Expenses []interface{}      `bson:"expenses" json:"expenses"`
+	Income   []interface{}      `bson:"income" json:"income,"`
 }
 
 func (c client) Get(chatID int) {
