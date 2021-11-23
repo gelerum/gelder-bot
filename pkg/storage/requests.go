@@ -2,7 +2,6 @@ package storage
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -19,13 +18,12 @@ type User struct {
 func (c client) Get(chatID int) {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
-	var a []byte
+	var a []interface{}
+	var b interface{}
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
+	c.Coll.FindOne(context.TODO(), filter).Decode(&b)
 	fmt.Println(a)
-	var d User
-	err := json.Unmarshal([]byte(a), &d)
-	fmt.Println(err)
-	fmt.Println(d)
+	fmt.Println(b)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
