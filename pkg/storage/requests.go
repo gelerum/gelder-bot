@@ -20,9 +20,9 @@ func (c client) Get(chatID int) {
 	filter := bson.M{"chatID": chatID}
 	var a User
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
+	fmt.Println(a)
 	fmt.Println(a.ChatID)
-	fmt.Println(a.Expenses[0])
-	fmt.Printf("%T", a.Expenses[0])
+	fmt.Println(a.Expenses)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
