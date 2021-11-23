@@ -18,10 +18,23 @@ type User struct {
 func (c client) Get(chatID int) {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
-	var a User
+	var a interface{}
+	var sec User
+	var k string
+	var u map[string]interface{}
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
-	fmt.Println(a.Expenses)
-	fmt.Println(a.Expenses[1])
+	c.Coll.FindOne(context.TODO(), filter).Decode(&sec)
+	c.Coll.FindOne(context.TODO(), filter).Decode(&k)
+	c.Coll.FindOne(context.TODO(), filter).Decode(&u)
+	var d User
+	var t User
+	bson.Unmarshal([]byte(a.(string)), &d)
+	bson.Unmarshal([]byte(k), &t)
+	fmt.Println(d)
+	fmt.Println(t)
+	fmt.Println()
+	fmt.Println()
+	fmt.Println(u["Expenses"])
 }
 
 func (c client) CreateUserDocument(chatID int) error {
