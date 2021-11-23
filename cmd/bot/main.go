@@ -47,10 +47,8 @@ func main() {
 		}
 	})
 	bot.Bot.Handle("/get", func(m *tb.Message) {
-		a := client.Get(m.Sender.ID)
-		print(a)
-		bot.Bot.Send(m.Sender, "aadf")
-		bot.Bot.Send(m.Sender, a)
+		client.Get(m.Sender.ID)
+
 	})
 	bot.Bot.Handle(tb.OnText, func(m *tb.Message) {
 		amountCategoryKind := strings.Fields(m.Text)

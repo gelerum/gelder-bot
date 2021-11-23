@@ -20,8 +20,7 @@ func (c client) Get(chatID int) bson.M {
 	filter := bson.M{"chatID": chatID}
 	var a bson.M
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
-	fmt.Println("HEHEHEH")
-	fmt.Print(a, "HEREORG")
+	fmt.Printf("Found a single document: %+v\n", a)
 	return a
 }
 
