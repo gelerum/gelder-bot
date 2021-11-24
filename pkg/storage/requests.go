@@ -8,11 +8,16 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+type Expenses struct {
+	Category string  `bson:"category"`
+	Amount   float32 `bson:""amount"`
+}
+
 type User struct {
-	ID       primitive.ObjectID     `bson:"_id" json:"_id"`
-	ChatID   int                    `bson:"chatID" json:"chatID"`
-	Expenses map[string]interface{} `bson:"expenses" json:"expenses"`
-	Income   []interface{}          `bson:"income" json:"income,"`
+	ID       primitive.ObjectID `bson:"_id" json:"_id"`
+	ChatID   int                `bson:"chatID" json:"chatID"`
+	Expenses []Expenses         `bson:"expenses" json:"expenses"`
+	Income   []interface{}      `bson:"income" json:"income,"`
 }
 
 func (c client) Get(chatID int) {
@@ -21,10 +26,7 @@ func (c client) Get(chatID int) {
 	var a User
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
 	fmt.Println(a.Expenses)
-	for k, i := range a.Expenses {
-		fmt.Println(k)
-		fmt.Println(i)
-	}
+	fmt.Println(a.Expenses[1])
 }
 
 func (c client) CreateUserDocument(chatID int) error {
