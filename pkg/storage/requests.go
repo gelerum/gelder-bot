@@ -34,6 +34,11 @@ func (c client) Get(chatID int) {
 	fmt.Println(a.Expenses[1].CreatedAt)
 	fmt.Println(a.Expenses[1].CreatedAt)
 }
+func (c client) Delete(chatID int) {
+	change := bson.M{"$pull": bson.M{"expenses": bson.M{"created_at": "2021-11-24T09:47:04.289+00:00"}}}
+	_, err := c.Coll.UpdateOne(context.TODO(), bson.D{{"chatID", chatID}}, change)
+	fmt.Println(err)
+}
 
 func (c client) CreateUserDocument(chatID int) error {
 	count, err := c.Coll.CountDocuments(context.TODO(), bson.D{{"chatID", chatID}})
