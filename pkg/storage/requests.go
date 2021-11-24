@@ -36,8 +36,9 @@ func (c client) Get(chatID int) {
 }
 func (c client) Delete(chatID int) {
 	change := bson.M{"$pull": bson.M{"expenses": bson.M{"created_at": "2021-11-24T09:47:04.289+00:00"}}}
-	_, err := c.Coll.UpdateOne(context.TODO(), bson.D{{"chatID", chatID}}, change)
+	a, err := c.Coll.UpdateOne(context.TODO(), bson.M{"chatID": chatID}, change)
 	fmt.Println(err)
+	fmt.Println(a)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
