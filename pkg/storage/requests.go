@@ -10,9 +10,9 @@ import (
 )
 
 type transactions struct {
-	Category  string  `bson:"category"`
-	Amount    float32 `bson:"amount"`
-	CreatedAt string  `bson:"created_at"`
+	Category  string    `bson:"category"`
+	Amount    float32   `bson:"amount"`
+	CreatedAt time.Time `bson:"created_at"`
 }
 
 type user struct {
@@ -32,9 +32,7 @@ func (c client) Get(chatID int) {
 	fmt.Println(a.Expenses[1].Category)
 	fmt.Println(a.Expenses[1].Amount)
 	fmt.Println(a.Expenses[1].CreatedAt)
-	t, err := time.Parse(time.RFC3339, a.Expenses[1].CreatedAt)
-	fmt.Println(err)
-	fmt.Println(t)
+	fmt.Println(a.Expenses[1].CreatedAt)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
