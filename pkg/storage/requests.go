@@ -9,32 +9,22 @@ import (
 )
 
 type User struct {
-	ID       primitive.ObjectID  `bson:"_id" json:"_id"`
-	ChatID   int                 `bson:"chatID" json:"chatID"`
-	Expenses map[int]interface{} `bson:"expenses" json:"expenses"`
-	Income   []interface{}       `bson:"income" json:"income,"`
-}
-type User1 struct {
-	ID       primitive.ObjectID          `bson:"_id" json:"_id"`
-	ChatID   int                         `bson:"chatID" json:"chatID"`
-	Expenses map[int]map[int]interface{} `bson:"expenses" json:"expenses"`
-	Income   []interface{}               `bson:"income" json:"income,"`
+	ID       primitive.ObjectID     `bson:"_id" json:"_id"`
+	ChatID   int                    `bson:"chatID" json:"chatID"`
+	Expenses map[string]interface{} `bson:"expenses" json:"expenses"`
+	Income   []interface{}          `bson:"income" json:"income,"`
 }
 
 func (c client) Get(chatID int) {
 	fmt.Print(chatID)
 	filter := bson.M{"chatID": chatID}
 	var a User
-	var b User1
 	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
-	c.Coll.FindOne(context.TODO(), filter).Decode(&b)
-	fmt.Println(a)
-	fmt.Println(a.ChatID)
 	fmt.Println(a.Expenses)
-	fmt.Println()
-	fmt.Println(b)
-	fmt.Println(b.ChatID)
-	fmt.Println(b.Expenses)
+	for k, i := range a.Expenses {
+		fmt.Println(k)
+		fmt.Println(i)
+	}
 }
 
 func (c client) CreateUserDocument(chatID int) error {
