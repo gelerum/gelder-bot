@@ -9,17 +9,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type positions struct {
-	Category  string             `bson:"category"`
-	Amount    float32            `bson:"amount"`
-	CreatedAt primitive.DateTime `bson:"created_at"`
+type transactions struct {
+	Category  string  `bson:"category"`
+	Amount    float32 `bson:"amount"`
+	CreatedAt string  `bson:"created_at"`
 }
 
 type user struct {
-	ID       primitive.ObjectID `bson:"_id" json:"_id"`
-	ChatID   int                `bson:"chatID" json:"chatID"`
-	Expenses []positions        `bson:"expenses" json:"expenses"`
-	Income   []positions        `bson:"income" json:"income,"`
+	ID       primitive.ObjectID `bson:"_id"`
+	ChatID   int                `bson:"chatID"`
+	Expenses []transactions     `bson:"expenses"`
+	Income   []transactions     `bson:"income"`
 }
 
 func (c client) Get(chatID int) {
@@ -32,6 +32,9 @@ func (c client) Get(chatID int) {
 	fmt.Println(a.Expenses[1].Category)
 	fmt.Println(a.Expenses[1].Amount)
 	fmt.Println(a.Expenses[1].CreatedAt)
+	t, err := time.Parse(time.RFC3339, a.Expenses[1].CreatedAt)
+	fmt.Println(err)
+	fmt.Println(t)
 }
 
 func (c client) CreateUserDocument(chatID int) error {
