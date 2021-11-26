@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -10,9 +11,9 @@ import (
 )
 
 type transactions struct {
-	Category  string    `bson:"category"`
-	Amount    float32   `bson:"amount"`
-	CreatedAt time.Time `bson:"created_at"`
+	Category     string    `bson:"category"`
+	Amount       float64   `bson:"amount"`
+	CreationDate time.Time `bson:"creationDate"`
 }
 
 type user struct {
@@ -22,18 +23,23 @@ type user struct {
 	Income   []transactions     `bson:"income"`
 }
 
-func (c client) Get(chatID int) {
-	fmt.Print(chatID)
+func (c client) GetTransactions(chatID int) string {
 	filter := bson.M{"chatID": chatID}
-	var a user
-	c.Coll.FindOne(context.TODO(), filter).Decode(&a)
-	fmt.Println(a.Expenses)
-	fmt.Println(a.Expenses[1])
-	fmt.Println(a.Expenses[1].Category)
-	fmt.Println(a.Expenses[1].Amount)
-	fmt.Println(a.Expenses[1].CreatedAt)
-	fmt.Println(a.Expenses[1].CreatedAt)
+	var document user
+	c.Coll.FindOne(context.TODO(), filter).Decode(&document)
+	sum := 0.0
+	var transactions string
+	for _, expense := range document.Expenses {
+		category := expense.Category
+		amount := expense.Amount
+		creationDate := expense.CreationDate
+		sum += amount
+		transactions += category + strconv.FormatFloat(amount, 'f', -1, 64) + creationDate.String()
+	}
+	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
+	return output
 }
+
 func (c client) Delete(chatID int) {
 	change := bson.M{"$pull": bson.M{"expenses": bson.D{{"category", "food"}, {"amount", 11}}}}
 	a, err := c.Coll.UpdateOne(context.TODO(), bson.M{"chatID": chatID}, change)

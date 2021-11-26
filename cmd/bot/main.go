@@ -47,7 +47,8 @@ func main() {
 		}
 	})
 	bot.Bot.Handle("/get", func(m *tb.Message) {
-		client.Get(m.Sender.ID)
+		output := client.GetTransactions(m.Sender.ID)
+		bot.Bot.Send(m.Sender, output)
 	})
 	bot.Bot.Handle("/delete", func(m *tb.Message) {
 		client.Delete(m.Sender.ID)
