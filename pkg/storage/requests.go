@@ -33,7 +33,7 @@ func (c client) GetTransactions(chatID int) string {
 		creationDate := expense.CreationDate
 		transactions += "- " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
 	}
-	transactions += "\n\nIncome:\n"
+	transactions += "\nIncome:\n"
 	for _, income := range doc.Income {
 		category := income.Category
 		amount := income.Amount
