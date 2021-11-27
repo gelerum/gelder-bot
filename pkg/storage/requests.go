@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -33,7 +34,7 @@ func (c client) GetTransactions(chatID int) string {
 		amount := expense.Amount
 		creationDate := expense.CreationDate
 		sum += amount
-		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.Format("%d") + "\n"
+		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + fmt.Sprintf("%d", creationDate) + "\n"
 	}
 	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
 	return output
