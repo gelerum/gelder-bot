@@ -26,17 +26,21 @@ func (c client) GetTransactions(chatID int) string {
 	filter := bson.M{"chatID": chatID}
 	var doc user
 	c.Coll.FindOne(context.TODO(), filter).Decode(&doc)
-	var sum float64
-	var transactions string
+	transactions := "Expenses:\n"
 	for _, expense := range doc.Expenses {
 		category := expense.Category
 		amount := expense.Amount
 		creationDate := expense.CreationDate
-		sum += amount
+		transactions += "- " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
+	}
+	transactions += "\n\nIncome:\n"
+	for _, income := range doc.Income {
+		category := income.Category
+		amount := income.Amount
+		creationDate := income.CreationDate
 		transactions += creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
 	}
-	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
-	return output
+	return transactions
 }
 
 func (c client) CreateUserDocument(chatID int) error {
