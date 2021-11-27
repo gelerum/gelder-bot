@@ -25,17 +25,18 @@ type user struct {
 
 func (c client) GetTransactions(chatID int) string {
 	filter := bson.M{"chatID": chatID}
-	var document user
-	c.Coll.FindOne(context.TODO(), filter).Decode(&document)
+	var doc user
+	c.Coll.FindOne(context.TODO(), filter).Decode(&doc)
 	var sum float64
 	var transactions string
-	for _, expense := range document.Expenses {
+	for _, expense := range doc.Expenses {
 		category := expense.Category
 		amount := expense.Amount
 		creationDate := expense.CreationDate
 		sum += amount
 		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + fmt.Sprintf("%d", creationDate) + "\n"
 	}
+	fmt.Println(doc.Expenses[1].CreationDate.Format("02-Jan-2006"))
 	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
 	return output
 }
