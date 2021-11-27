@@ -27,14 +27,14 @@ func (c client) GetTransactions(chatID int) string {
 	filter := bson.M{"chatID": chatID}
 	var document user
 	c.Coll.FindOne(context.TODO(), filter).Decode(&document)
-	sum := 0.0
+	var sum float64
 	var transactions string
 	for _, expense := range document.Expenses {
 		category := expense.Category
 		amount := expense.Amount
 		creationDate := expense.CreationDate
 		sum += amount
-		transactions += category + strconv.FormatFloat(amount, 'f', -1, 64) + creationDate.String()
+		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + category + creationDate.Format("Jan 2") + "\n"
 	}
 	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
 	return output
