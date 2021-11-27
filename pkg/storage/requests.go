@@ -2,7 +2,6 @@ package storage
 
 import (
 	"context"
-	"fmt"
 	"strconv"
 	"time"
 
@@ -34,17 +33,10 @@ func (c client) GetTransactions(chatID int) string {
 		amount := expense.Amount
 		creationDate := expense.CreationDate
 		sum += amount
-		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.Format("02-Jan-2006") + "\n"
+		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.Format("%d") + "\n"
 	}
 	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
 	return output
-}
-
-func (c client) Delete(chatID int) {
-	change := bson.M{"$pull": bson.M{"expenses": bson.D{{"category", "food"}, {"amount", 11}}}}
-	a, err := c.Coll.UpdateOne(context.TODO(), bson.M{"chatID": chatID}, change)
-	fmt.Println(err)
-	fmt.Println(a)
 }
 
 func (c client) CreateUserDocument(chatID int) error {

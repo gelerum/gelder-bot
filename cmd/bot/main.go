@@ -50,9 +50,6 @@ func main() {
 		output := client.GetTransactions(m.Sender.ID)
 		bot.Bot.Send(m.Sender, output)
 	})
-	bot.Bot.Handle("/delete", func(m *tb.Message) {
-		client.Delete(m.Sender.ID)
-	})
 	bot.Bot.Handle(tb.OnText, func(m *tb.Message) {
 		amountCategoryKind := strings.Fields(m.Text)
 		if len(amountCategoryKind) != 3 {
