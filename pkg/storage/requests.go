@@ -33,7 +33,7 @@ func (c client) GetTransactions(chatID int) string {
 		amount := expense.Amount
 		creationDate := expense.CreationDate
 		sum += amount
-		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.String() + "\n"
+		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.Format("Jan 2") + "\n"
 	}
 	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
 	return output
@@ -53,7 +53,7 @@ func (c client) CreateUserDocument(chatID int) error {
 
 func (c client) AddTransaction(chatID int, amount float64, category string, kind string) error {
 	filter := bson.D{{"chatID", chatID}}
-	update := bson.M{"$push": bson.M{kind: bson.D{{"category", category}, {"amount", amount}, {"created_at", time.Now()}}}}
+	update := bson.M{"$push": bson.M{kind: bson.D{{"category", category}, {"amount", amount}, {"creationDate", time.Now()}}}}
 	_, err := c.Coll.UpdateOne(context.TODO(), filter, update)
 	return err
 }
