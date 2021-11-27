@@ -22,25 +22,26 @@ type user struct {
 	Income   []transactions     `bson:"income"`
 }
 
+func a(transactions []transactions, history string) string {
+	for _, transaction := range transactions {
+		category := transaction.Category
+		amount := transaction.Amount
+		creationDate := transaction.CreationDate
+		history += "- " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
+	}
+	return history
+}
+
 func (c client) GetTransactions(chatID int) string {
-	filter := bson.M{"chatID": chatID}
 	var doc user
+	filter := bson.M{"chatID": chatID}
+
 	c.Coll.FindOne(context.TODO(), filter).Decode(&doc)
-	transactions := "Expenses:\n"
-	for _, expense := range doc.Expenses {
-		category := expense.Category
-		amount := expense.Amount
-		creationDate := expense.CreationDate
-		transactions += "- " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
-	}
-	transactions += "\nIncome:\n"
-	for _, income := range doc.Income {
-		category := income.Category
-		amount := income.Amount
-		creationDate := income.CreationDate
-		transactions += creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
-	}
-	return transactions
+	history := "Expenses:\n"
+	history += a(doc.Expenses, history)
+	history += "\nIncome:\n"
+	history += a(doc.Income, history)
+	return history
 }
 
 func (c client) CreateUserDocument(chatID int) error {
