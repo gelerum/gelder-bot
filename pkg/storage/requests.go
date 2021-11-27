@@ -34,7 +34,7 @@ func (c client) GetTransactions(chatID int) string {
 		amount := expense.Amount
 		creationDate := expense.CreationDate
 		sum += amount
-		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.Format("Jan 2, 2006 at 3:04pm") + "\n"
+		transactions += strconv.FormatFloat(amount, 'f', -1, 64) + " " + category + " " + creationDate.Format("02-Jan-2006") + "\n"
 	}
 	output := strconv.FormatFloat(sum, 'f', -1, 64) + "\n\n" + transactions
 	return output
