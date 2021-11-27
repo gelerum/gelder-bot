@@ -22,7 +22,8 @@ type user struct {
 	Income   []transactions     `bson:"income"`
 }
 
-func a(transactions []transactions, history string) string {
+func a(transactions []transactions) string {
+	var history string
 	for _, transaction := range transactions {
 		category := transaction.Category
 		amount := transaction.Amount
@@ -38,9 +39,9 @@ func (c client) GetTransactions(chatID int) string {
 
 	c.Coll.FindOne(context.TODO(), filter).Decode(&doc)
 	history := "Expenses:\n"
-	history += a(doc.Expenses, history)
+	history += a(doc.Expenses)
 	history += "\nIncome:\n"
-	history += a(doc.Income, history)
+	history += a(doc.Income)
 	return history
 }
 
