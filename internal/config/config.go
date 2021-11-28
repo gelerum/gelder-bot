@@ -22,9 +22,11 @@ func InitConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	var cfg *Config
-	err = viper.UnmarshalKey("messages", &cfg.Messages)
 	fmt.Println(3)
+	var cfg *Config
+	fmt.Println(4)
+	err = viper.UnmarshalKey("messages", &cfg.Messages)
+	fmt.Println(5)
 	if err != nil {
 		return nil, err
 	}
