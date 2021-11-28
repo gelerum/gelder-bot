@@ -2,14 +2,14 @@ package storage
 
 import (
 	"context"
-	"strconv"
 	"time"
 
+	"github.com/gelerum/gelder-bot/pkg/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type transactions struct {
+type Transactions struct {
 	Category     string    `bson:"category"`
 	Amount       float64   `bson:"amount"`
 	CreationDate time.Time `bson:"creationDate"`
@@ -18,34 +18,23 @@ type transactions struct {
 type user struct {
 	ID       primitive.ObjectID `bson:"_id"`
 	ChatID   int                `bson:"chatID"`
-	Expenses []transactions     `bson:"expenses"`
-	Income   []transactions     `bson:"income"`
+	Expenses []Transactions     `bson:"expenses"`
+	Income   []Transactions     `bson:"income"`
 }
 
-func createTransactionList(transactions []transactions) string {
-	var history string
-	for n, transaction := range transactions {
-		category := transaction.Category
-		amount := transaction.Amount
-		creationDate := transaction.CreationDate
-		history += strconv.Itoa(n+1) + ". " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
-	}
-	return history
-}
-
-func (c client) GetTransactions(chatID int) string {
+func (c Client) GetTransactions(chatID int) string {
 	var doc user
 	filter := bson.M{"chatID": chatID}
 	c.Coll.FindOne(context.TODO(), filter).Decode(&doc)
 
 	history := "Expenses:\n"
-	history += createTransactionList(doc.Expenses)
+	history += util.CreateTransactionList(doc.Expenses)
 	history += "\nIncome:\n"
-	history += createTransactionList(doc.Income)
+	history += util.CreateTransactionList(doc.Income)
 	return history
 }
 
-func (c client) CreateUserDocument(chatID int) error {
+func (c Client) CreateUserDocument(chatID int) error {
 	count, err := c.Coll.CountDocuments(context.TODO(), bson.D{{"chatID", chatID}})
 	if err != nil {
 		return err
@@ -57,7 +46,7 @@ func (c client) CreateUserDocument(chatID int) error {
 	return err
 }
 
-func (c client) AddTransaction(chatID int, amount float64, category string, kind string) error {
+func (c Client) AddTransaction(chatID int, amount float64, category string, kind string) error {
 	filter := bson.D{{"chatID", chatID}}
 	update := bson.M{"$push": bson.M{kind: bson.D{{"category", category}, {"amount", amount}, {"creationDate", time.Now()}}}}
 	_, err := c.Coll.UpdateOne(context.TODO(), filter, update)

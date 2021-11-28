@@ -9,12 +9,12 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type client struct {
+type Client struct {
 	Client *mongo.Client
 	Coll   *mongo.Collection
 }
 
-func NewClient() (*client, error) {
+func NewClient() (*Client, error) {
 	newClient, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func NewClient() (*client, error) {
 		return nil, err
 	}
 	coll := newClient.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("DATABASE_COLLECTION"))
-	return &client{
+	return &Client{
 		Client: newClient,
 		Coll:   coll,
 	}, nil

@@ -3,11 +3,13 @@ package telegram
 import (
 	"os"
 
+	"github.com/gelerum/gelder-bot/pkg/storage"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 type bot struct {
-	Bot *tb.Bot
+	Bot    *tb.Bot
+	client *storage.Client
 }
 
 func NewBot() (*bot, error) {
@@ -28,7 +30,12 @@ func NewBot() (*bot, error) {
 	if err != nil {
 		return nil, err
 	}
+	client, err := storage.NewClient()
+	if err != nil {
+		return nil, err
+	}
 	return &bot{
-		Bot: newBot,
+		Bot:    newBot,
+		client: client,
 	}, nil
 }
