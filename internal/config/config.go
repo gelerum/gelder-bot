@@ -23,10 +23,10 @@ func InitConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	viper.AutomaticEnv()
 	cfg.Bot.Port = viper.Get("PORT").(string)
 	cfg.Bot.AppURL = viper.Get("APP_URL").(string)
 	cfg.Bot.Token = viper.Get("BOT_TOKEN").(string)
-
 	cfg.Client.URI = viper.Get("MONGO_URI").(string)
 	cfg.Client.Name = viper.Get("DATABASE_NAME").(string)
 	cfg.Client.Collection = viper.Get("DATABASE_COLLECTION").(string)
