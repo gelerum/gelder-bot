@@ -36,7 +36,7 @@ func InitConfig() (*Config, error) {
 	cfg.Client.URI = os.Getenv("MONGO_URI")
 	cfg.Client.Name = os.Getenv("DATABASE_NAME")
 	cfg.Client.Collection = os.Getenv("DATABASE_COLLECTION")
-	return cfg, nil
+	return &cfg, nil
 }
 
 type (
