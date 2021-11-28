@@ -22,13 +22,13 @@ type user struct {
 	Income   []transactions     `bson:"income"`
 }
 
-func a(transactions []transactions) string {
+func createTransactionList(transactions []transactions) string {
 	var history string
-	for _, transaction := range transactions {
+	for n, transaction := range transactions {
 		category := transaction.Category
 		amount := transaction.Amount
 		creationDate := transaction.CreationDate
-		history += "- " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
+		history += strconv.Itoa(n+1) + " " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
 	}
 	return history
 }
@@ -36,12 +36,12 @@ func a(transactions []transactions) string {
 func (c client) GetTransactions(chatID int) string {
 	var doc user
 	filter := bson.M{"chatID": chatID}
-
 	c.Coll.FindOne(context.TODO(), filter).Decode(&doc)
+
 	history := "Expenses:\n"
-	history += a(doc.Expenses)
+	history += createTransactionList(doc.Expenses)
 	history += "\nIncome:\n"
-	history += a(doc.Income)
+	history += createTransactionList(doc.Income)
 	return history
 }
 
