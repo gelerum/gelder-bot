@@ -28,7 +28,7 @@ func createTransactionList(transactions []transactions) string {
 		category := transaction.Category
 		amount := transaction.Amount
 		creationDate := transaction.CreationDate
-		history += strconv.Itoa(n+1) + " " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
+		history += strconv.Itoa(n+1) + ". " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
 	}
 	return history
 }
