@@ -23,7 +23,7 @@ func InitConfig() (*Config, error) {
 		return nil, err
 	}
 	fmt.Println(3)
-	var cfg *Config
+	var cfg Config
 	fmt.Println(4)
 	err = viper.UnmarshalKey("messages", &cfg.Messages)
 	fmt.Println(5)
