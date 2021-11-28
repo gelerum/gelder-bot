@@ -2,20 +2,20 @@ package storage
 
 import (
 	"context"
-	"os"
 	"time"
 
+	"github.com/gelerum/gelder-bot/internal/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Client struct {
-	Client *mongo.Client
-	Coll   *mongo.Collection
+	client *mongo.Client
+	coll   *mongo.Collection
 }
 
-func NewClient() (*Client, error) {
-	newClient, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+func NewClient(cfg *config.Client) (*Client, error) {
+	newClient, err := mongo.NewClient(options.Client().ApplyURI(cfg.URI))
 	if err != nil {
 		return nil, err
 	}
@@ -25,9 +25,9 @@ func NewClient() (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	coll := newClient.Database(os.Getenv("DATABASE_NAME")).Collection(os.Getenv("DATABASE_COLLECTION"))
+	coll := newClient.Database(cfg.Name).Collection(cfg.Collection)
 	return &Client{
-		Client: newClient,
-		Coll:   coll,
+		client: newClient,
+		coll:   coll,
 	}, nil
 }

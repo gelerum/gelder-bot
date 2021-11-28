@@ -1,22 +1,23 @@
 package telegram
 
 import (
-	"os"
-
+	"github.com/gelerum/gelder-bot/internal/config"
 	"github.com/gelerum/gelder-bot/pkg/storage"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 type bot struct {
-	Bot    *tb.Bot
-	client *storage.Client
+	Bot      *tb.Bot
+	client   *storage.Client
+	config   *config.Bot
+	messages *config.Messages
 }
 
-func NewBot() (*bot, error) {
+func NewBot(cfg *config.Bot, msgs *config.Messages, clnt *storage.Client) (*bot, error) {
 	var (
-		port     = os.Getenv("PORT")
-		appUrl   = os.Getenv("APP_URL")
-		botToken = os.Getenv("BOT_TOKEN")
+		port     = cfg.Port
+		appUrl   = cfg.AppURL
+		botToken = cfg.Token
 	)
 	webhook := &tb.Webhook{
 		Listen:   ":" + port,
@@ -30,12 +31,11 @@ func NewBot() (*bot, error) {
 	if err != nil {
 		return nil, err
 	}
-	client, err := storage.NewClient()
-	if err != nil {
-		return nil, err
-	}
+
 	return &bot{
-		Bot:    newBot,
-		client: client,
+		Bot:      newBot,
+		client:   clnt,
+		config:   cfg,
+		messages: msgs,
 	}, nil
 }
