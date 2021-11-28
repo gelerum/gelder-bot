@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type transactions struct {
+type Transactions struct {
 	Category     string    `bson:"category"`
 	Amount       float64   `bson:"amount"`
 	CreationDate time.Time `bson:"creationDate"`
@@ -17,20 +17,16 @@ type transactions struct {
 type user struct {
 	ID       primitive.ObjectID `bson:"_id"`
 	ChatID   int                `bson:"chatID"`
-	Expenses []transactions     `bson:"expenses"`
-	Income   []transactions     `bson:"income"`
+	Expenses []Transactions     `bson:"expenses"`
+	Income   []Transactions     `bson:"income"`
 }
 
-func (c Client) GetTransactions(chatID int) string {
+func (c Client) GetTransactions(chatID int) ([]Transactions, []Transactions) {
 	var doc user
 	filter := bson.M{"chatID": chatID}
 	c.coll.FindOne(context.TODO(), filter).Decode(&doc)
+	return doc.Expenses, doc.Income
 
-	history := "Expenses:\n"
-	history += createTransactionList(doc.Expenses)
-	history += "\nIncome:\n"
-	history += createTransactionList(doc.Income)
-	return history
 }
 
 func (c Client) CreateUserDocument(chatID int) error {

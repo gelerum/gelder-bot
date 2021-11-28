@@ -34,7 +34,8 @@ func (b *bot) HandleCategories(m *tb.Message) {
 	}
 }
 func (b *bot) HandleTransactions(m *tb.Message) {
-	output := b.client.GetTransactions(m.Sender.ID)
+	expenses, income := b.client.GetTransactions(m.Sender.ID)
+	output := createTransactionHistory(expenses, income)
 	b.Bot.Send(m.Sender, output)
 }
 func (b *bot) HandleMessage(m *tb.Message) {
@@ -50,13 +51,10 @@ func (b *bot) HandleMessage(m *tb.Message) {
 	}
 	category := amountCategoryKind[1]
 	kind := strings.ToLower(amountCategoryKind[2])
-	if kind == "expenses" && isCategoryValid(category, kind) {
-		err = b.client.AddTransaction(m.Sender.ID, amount, category, kind)
-		if err != nil {
-			log.Fatal(err)
-			return
-		}
-	} else if kind == "income" && isCategoryValid(category, kind) {
+	if kind != "expenses" && kind != "income" {
+		b.Bot.Send(m.Sender, b.messages.InitialError)
+	}
+	if isCategoryValid(category, kind) {
 		err = b.client.AddTransaction(m.Sender.ID, amount, category, kind)
 		if err != nil {
 			log.Fatal(err)
