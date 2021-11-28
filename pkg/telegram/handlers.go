@@ -33,7 +33,7 @@ func (b *bot) HandleCategories(m *tb.Message) {
 		return
 	}
 }
-func (b *bot) HandleGetTransactions(m *tb.Message) {
+func (b *bot) HandleTransactions(m *tb.Message) {
 	output := b.client.GetTransactions(m.Sender.ID)
 	b.Bot.Send(m.Sender, output)
 }

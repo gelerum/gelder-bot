@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/spf13/viper"
@@ -12,21 +11,15 @@ func InitConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(path)
 	viper.AddConfigPath(path + "/configs")
 	viper.SetConfigName("main")
 	viper.SetConfigType("yaml")
-	fmt.Println(1)
 	err = viper.ReadInConfig()
-	fmt.Println(2)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(3)
 	var cfg Config
-	fmt.Println(4)
 	err = viper.UnmarshalKey("messages", &cfg.Messages)
-	fmt.Println(5)
 	if err != nil {
 		return nil, err
 	}

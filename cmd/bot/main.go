@@ -28,6 +28,7 @@ func main() {
 	bot.Bot.Handle("/start", bot.HandleStart)
 	bot.Bot.Handle("/help", bot.HandleHelp)
 	bot.Bot.Handle("/categoties", bot.HandleCategories)
+	bot.Bot.Handle("/transactions", bot.HandleTransactions)
 	bot.Bot.Handle(tb.OnText, bot.HandleMessage)
 	bot.Bot.Start()
 }
