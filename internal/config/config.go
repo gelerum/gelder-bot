@@ -13,7 +13,7 @@ func InitConfig() (*Config, error) {
 	}
 	viper.AddConfigPath(path + "/configs")
 	viper.SetConfigName("main")
-	viper.SetConfigType("yaml")
+	viper.SetConfigType("yml")
 	err = viper.ReadInConfig()
 	if err != nil {
 		return nil, err
