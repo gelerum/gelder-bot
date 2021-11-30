@@ -40,7 +40,7 @@ func (b *bot) HandleBalance(m *tb.Message) {
 	expenses, income := b.client.GetTransactions(m.Sender.ID)
 	expensesSum := calculateTransactionsSum(expenses)
 	incomeSum := calculateTransactionsSum(income)
-	output := "Expenses: " + strconv.FormatFloat(expensesSum, 'f', -1, 64) + "\n\nIncome: " + strconv.FormatFloat(incomeSum, 'f', -1, 64)
+	output := "Expenses: " + strconv.FormatFloat(expensesSum, 'f', -1, 64) + "\nIncome: " + strconv.FormatFloat(incomeSum, 'f', -1, 64)
 	_, err := b.Bot.Send(m.Sender, output)
 	if err != nil {
 		log.Fatal(err)
