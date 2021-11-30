@@ -8,18 +8,20 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type Transactions struct {
-	Category     string    `bson:"category"`
-	Amount       float64   `bson:"amount"`
-	CreationDate time.Time `bson:"creationDate"`
-}
+type (
+	Transactions struct {
+		Category     string    `bson:"category"`
+		Amount       float64   `bson:"amount"`
+		CreationDate time.Time `bson:"creationDate"`
+	}
 
-type user struct {
-	ID       primitive.ObjectID `bson:"_id"`
-	ChatID   int                `bson:"chatID"`
-	Expenses []Transactions     `bson:"expenses"`
-	Income   []Transactions     `bson:"income"`
-}
+	user struct {
+		ID       primitive.ObjectID `bson:"_id"`
+		ChatID   int                `bson:"chatID"`
+		Expenses []Transactions     `bson:"expenses"`
+		Income   []Transactions     `bson:"income"`
+	}
+)
 
 func (c Client) GetTransactions(chatID int) ([]Transactions, []Transactions) {
 	var doc user

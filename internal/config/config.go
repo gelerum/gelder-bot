@@ -6,6 +6,31 @@ import (
 	"github.com/spf13/viper"
 )
 
+type (
+	Config struct {
+		Messages Messages
+		Bot      Bot
+		Client   Client
+	}
+	Messages struct {
+		Start         string `mapstructure:"start"`
+		Help          string `mapstructure:"help"`
+		Categories    string `mapstructure:"categories"`
+		InitialError  string `mapstructure:"initial_error"`
+		CategoryError string `mapstructure:"category_error"`
+	}
+	Bot struct {
+		Port   string
+		AppURL string
+		Token  string
+	}
+	Client struct {
+		URI        string
+		Name       string
+		Collection string
+	}
+)
+
 func InitConfig() (*Config, error) {
 	path, err := os.Getwd()
 	if err != nil {
@@ -31,28 +56,3 @@ func InitConfig() (*Config, error) {
 	cfg.Client.Collection = os.Getenv("DATABASE_COLLECTION")
 	return &cfg, nil
 }
-
-type (
-	Config struct {
-		Messages Messages
-		Bot      Bot
-		Client   Client
-	}
-	Messages struct {
-		Start         string `mapstructure:"start"`
-		Help          string `mapstructure:"help"`
-		Categories    string `mapstructure:"categories"`
-		InitialError  string `mapstructure:"initial_error"`
-		CategoryError string `mapstructure:"category_error"`
-	}
-	Bot struct {
-		Port   string
-		AppURL string
-		Token  string
-	}
-	Client struct {
-		URI        string
-		Name       string
-		Collection string
-	}
-)

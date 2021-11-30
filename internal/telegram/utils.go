@@ -34,15 +34,16 @@ func isCategoryValid(category string, kind string) bool {
 	}
 	return false
 }
-func createTransactionHistory(expenses []storage.Transactions, income []storage.Transactions) string {
-	history := "Expenses:\n"
-	history += formatTransactions(expenses)
-	history += "\nIncome:\n"
-	history += formatTransactions(income)
-	return history
+
+func calculateTransactionsSum(transactions []storage.Transactions) float64 {
+	var sum float64
+	for _, transaction := range transactions {
+		sum += transaction.Amount
+	}
+	return sum
 }
 
-func formatTransactions(transactions []storage.Transactions) string {
+func createTransactionHistory(transactions []storage.Transactions) string {
 	var transactionList string
 	for n, transaction := range transactions {
 		category := transaction.Category

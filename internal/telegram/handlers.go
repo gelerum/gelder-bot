@@ -19,6 +19,7 @@ func (b *bot) HandleStart(m *tb.Message) {
 		log.Fatal(err)
 	}
 }
+
 func (b *bot) HandleHelp(m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Help)
 	if err != nil {
@@ -26,6 +27,7 @@ func (b *bot) HandleHelp(m *tb.Message) {
 		return
 	}
 }
+
 func (b *bot) HandleCategories(m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Categories)
 	if err != nil {
@@ -33,11 +35,28 @@ func (b *bot) HandleCategories(m *tb.Message) {
 		return
 	}
 }
+
+func (b *bot) HandleBalance(m *tb.Message) {
+	expenses, income := b.client.GetTransactions(m.Sender.ID)
+	expensesSum := calculateTransactionsSum(expenses)
+	incomeSum := calculateTransactionsSum(income)
+	output := "Expenses: " + strconv.FormatFloat(expensesSum, 'f', -1, 64) + "\n\nIncome: " + strconv.FormatFloat(incomeSum, 'f', -1, 64)
+	_, err := b.Bot.Send(m.Sender, output)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+}
+
 func (b *bot) HandleTransactions(m *tb.Message) {
 	expenses, income := b.client.GetTransactions(m.Sender.ID)
-	output := createTransactionHistory(expenses, income)
+	output := "Expenses:\n"
+	output += createTransactionHistory(expenses)
+	output += "\nIncome:\n"
+	output += createTransactionHistory(income)
 	b.Bot.Send(m.Sender, output)
 }
+
 func (b *bot) HandleMessage(m *tb.Message) {
 	amountCategoryKind := strings.Fields(m.Text)
 	if len(amountCategoryKind) != 3 {
