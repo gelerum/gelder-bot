@@ -51,7 +51,12 @@ func (c Client) AddTransaction(chatID int, amount float64, category string, kind
 
 func (c Client) DeleteTransaction(chatID int, transactionNumber string, kind string) error {
 	filter := bson.M{"chatID": chatID}
-	update := bson.D{{"$pull", bson.D{{"expenses." + transactionNumber, 1}}}}
-	_, err := c.coll.UpdateOne(c.ctx, filter, update)
+	unsetUpdate := bson.M{"$unset": bson.D{{"expenses." + transactionNumber, 1}}}
+	pullUpdate := bson.M{"$pull": bson.M{"expenses": nil}}
+	_, err := c.coll.UpdateOne(c.ctx, filter, unsetUpdate)
+	if err != nil {
+		return err
+	}
+	_, err = c.coll.UpdateOne(c.ctx, filter, pullUpdate)
 	return err
 }
