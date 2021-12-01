@@ -20,7 +20,6 @@ func (b *bot) HandleStart(m *tb.Message) {
 		b.Bot.Send(m.Sender, "Bot error. Try /start again")
 		return
 	}
-	log.Print("User has been added successfully")
 }
 
 func (b *bot) HandleHelp(m *tb.Message) {

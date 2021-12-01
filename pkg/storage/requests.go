@@ -45,6 +45,7 @@ func (c *Client) CreateUserDocument(chatID int) error {
 		log.Fatal(err)
 		return err
 	}
+	log.Print("User has been added successfully")
 	return nil
 }
 
