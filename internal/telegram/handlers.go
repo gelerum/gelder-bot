@@ -1,7 +1,6 @@
 package telegram
 
 import (
-	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -59,9 +58,7 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 }
 
 func (b *bot) DeleteTransactions(m *tb.Message) {
-	fmt.Print("begin")
-	b.Bot.Send(m.Sender, m.Text)
-	fmt.Print(m.Text)
+	a := strconv.Atoi(m.Text[4:])
 }
 
 func (b *bot) HandleMessage(m *tb.Message) {

@@ -12,6 +12,7 @@ import (
 type Client struct {
 	client *mongo.Client
 	coll   *mongo.Collection
+	ctx    context.Context
 }
 
 func NewClient(cfg *config.Client) (*Client, error) {
@@ -26,8 +27,10 @@ func NewClient(cfg *config.Client) (*Client, error) {
 		return nil, err
 	}
 	coll := newClient.Database(cfg.Name).Collection(cfg.Collection)
+	context := context.TODO()
 	return &Client{
 		client: newClient,
 		coll:   coll,
+		ctx:    context,
 	}, nil
 }
