@@ -19,8 +19,8 @@ type (
 		AddInitialError string `mapstructure:"add_initial_error"`
 		KindError       string `mapstructure:"kind_error"`
 		CategoryError   string `mapstructure:"category_error"`
-		NumberError     string `mapstructure:"number_error"`
 		DelInitialError string `mapstructure:"del_initial_error"`
+		NumberError     string `mapstructure:"number_error"`
 	}
 	Bot struct {
 		Port   string
