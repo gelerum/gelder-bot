@@ -1,6 +1,8 @@
 package telegram
 
 import (
+	"log"
+
 	"github.com/gelerum/gelder-bot/internal/config"
 	"github.com/gelerum/gelder-bot/pkg/storage"
 	tb "gopkg.in/tucnak/telebot.v2"
@@ -29,6 +31,7 @@ func NewBot(cfg *config.Bot, msgs *config.Messages, clnt *storage.Client) (*bot,
 	}
 	newBot, err := tb.NewBot(preferencies)
 	if err != nil {
+		log.Fatal(err)
 		return nil, err
 	}
 

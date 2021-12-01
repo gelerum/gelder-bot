@@ -17,7 +17,9 @@ type (
 		Help          string `mapstructure:"help"`
 		Categories    string `mapstructure:"categories"`
 		InitialError  string `mapstructure:"initial_error"`
+		KindError     string `mapstructure:"kind_error"`
 		CategoryError string `mapstructure:"category_error"`
+		NumberError   string `mapstructure:"number_error"`
 	}
 	Bot struct {
 		Port   string

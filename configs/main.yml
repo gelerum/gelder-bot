@@ -1,6 +1,8 @@
 messages:
   start: "Gelder bot helps you organize your expenses and income\n\n/help - show help"
-  help: "/help - show help \n/categories - show all categories\n\nSend me a message to add expense or income\nExample: 150.99 food expense"
-  categories: "Expenses:\n    1. Food\n    2. Transportation\n    3. Savings\n    4. Subscribtions\n    5. Others\n\nIncome: \n    1. Job\n    2. Freelancing\n    3. Buisness\n    4. Cashback\n    5. Others"
+  help: "/help - Help \n/categories - List of avaiable categories \n/balance - Total expenses and total income \n /transactions - List of transactions\n\nSend me a message to add expense or income Example: 150.99 food expenses"
+  categories: "Expenses:\n   1. Food\n   2. Transportation\n   3. Entertainment\n   4. Household\n   5.Savings\n   6. Subscribtions\n   7. Others\n\nIncome: \n   1. Job\n   2. Freelancing\n   3. Buisness\n   4. Cashback\n   5. Others"
   initial_error: "Send me amount, category and type. Example: 150.99 food expenses"
-  category_error: "Use expense or income. Example: 150.99 food expenses. /categories - list of supported categories"
+  kind_error: "Use only expenses or income. Example: 150.99 food expenses"
+  category_error: "Use only avaiable categories. Example: 150.99 food expenses. /categories - list of supported categories"
+  number_error: "Use natural number. Example: /del 1 expenses"

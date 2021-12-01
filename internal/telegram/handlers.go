@@ -17,7 +17,10 @@ func (b *bot) HandleStart(m *tb.Message) {
 	err = b.client.CreateUserDocument(m.Sender.ID)
 	if err != nil {
 		log.Fatal(err)
+		b.Bot.Send(m.Sender, "Bot error. Try /start again")
+		return
 	}
+	log.Print("User has been added successfully")
 }
 
 func (b *bot) HandleHelp(m *tb.Message) {
@@ -26,6 +29,7 @@ func (b *bot) HandleHelp(m *tb.Message) {
 		log.Fatal(err)
 		return
 	}
+	log.Print("Help has been sent successfully")
 }
 
 func (b *bot) HandleCategories(m *tb.Message) {
@@ -34,6 +38,7 @@ func (b *bot) HandleCategories(m *tb.Message) {
 		log.Fatal(err)
 		return
 	}
+	log.Print("Categories list has been sent successfully")
 }
 
 func (b *bot) HandleBalance(m *tb.Message) {
@@ -46,6 +51,7 @@ func (b *bot) HandleBalance(m *tb.Message) {
 		log.Fatal(err)
 		return
 	}
+	log.Print("Balance has been sent successfully")
 }
 
 func (b *bot) HandleTransactions(m *tb.Message) {
@@ -54,21 +60,31 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 	output += createTransactionHistory(expenses)
 	output += "\nIncome:\n"
 	output += createTransactionHistory(income)
+	log.Print("Transactions list has been sent successfully")
 	b.Bot.Send(m.Sender, output)
 }
 
 func (b *bot) DeleteTransactions(m *tb.Message) {
-	initialTransactionNumber, err := strconv.Atoi(m.Text[5:])
+	numberKind := strings.Fields(m.Text)
+	kind := numberKind[1]
+	initialTransactionNumber, err := strconv.Atoi(numberKind[0])
 	if err != nil {
-		log.Fatal(err)
+		b.Bot.Send(m.Sender, b.messages.NumberError)
+		return
+	}
+	if initialTransactionNumber < 1 {
+		b.Bot.Send(m.Sender, b.messages.NumberError)
 		return
 	}
 	transactionNumber := strconv.Itoa(initialTransactionNumber - 1)
-	err = b.client.DeleteTransaction(m.Sender.ID, transactionNumber, "expenses")
+	err = b.client.DeleteTransaction(m.Sender.ID, transactionNumber, kind)
 	if err != nil {
 		log.Fatal(err)
+		b.Bot.Send(m.Sender, "Bot error")
 		return
 	}
+	log.Print("Transaction has been deleted successfully")
+	b.Bot.Send(m.Sender, "Transaction has been deleted successfully")
 }
 
 func (b *bot) HandleMessage(m *tb.Message) {
@@ -85,15 +101,19 @@ func (b *bot) HandleMessage(m *tb.Message) {
 	category := amountCategoryKind[1]
 	kind := strings.ToLower(amountCategoryKind[2])
 	if kind != "expenses" && kind != "income" {
-		b.Bot.Send(m.Sender, b.messages.InitialError)
+		b.Bot.Send(m.Sender, b.messages.KindError)
+		return
 	}
-	if isCategoryValid(category, kind) {
-		err = b.client.AddTransaction(m.Sender.ID, amount, category, kind)
-		if err != nil {
-			log.Fatal(err)
-			return
-		}
-	} else {
+	if !categoryIsValid(category, kind) {
 		b.Bot.Send(m.Sender, b.messages.CategoryError)
+		return
 	}
+	err = b.client.AddTransaction(m.Sender.ID, amount, category, kind)
+	if err != nil {
+		log.Fatal(err)
+		b.Bot.Send(m.Sender, "Bot error")
+		return
+	}
+	log.Print("Transaction has been added successfully")
+	b.Bot.Send(m.Sender, "Transaction has been added successfully")
 }

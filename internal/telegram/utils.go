@@ -6,25 +6,28 @@ import (
 	"github.com/gelerum/gelder-bot/pkg/storage"
 )
 
-func isCategoryValid(category string, kind string) bool {
-	expensesCategories := [5]string{
+func categoryIsValid(category string, kind string) bool {
+	expensesCategories := []string{
 		"food",
 		"transportation",
+		"entertainment",
+		"household",
 		"savings",
 		"others",
 		"subscribtions",
 	}
-	incomeCategories := [5]string{
+	incomeCategories := []string{
 		"job",
 		"freelancing",
 		"buisness",
 		"cashback",
 		"others",
 	}
-	var categories [5]string
+	var categories []string
 	if kind == "expenses" {
 		categories = expensesCategories
-	} else if kind == "income" {
+	}
+	if kind == "expenses" {
 		categories = incomeCategories
 	}
 	for _, item := range categories {
