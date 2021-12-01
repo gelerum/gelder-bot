@@ -1,6 +1,7 @@
 package telegram
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -55,6 +56,9 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 	output += "\nIncome:\n"
 	output += createTransactionHistory(income)
 	b.Bot.Send(m.Sender, output)
+}
+func (b *bot) DeleteTransactions(m *tb.Message) {
+	fmt.Print(m.Text)
 }
 
 func (b *bot) HandleMessage(m *tb.Message) {

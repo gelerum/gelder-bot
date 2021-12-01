@@ -30,6 +30,7 @@ func main() {
 	bot.Bot.Handle("/categories", bot.HandleCategories)
 	bot.Bot.Handle("/balance", bot.HandleBalance)
 	bot.Bot.Handle("/transactions", bot.HandleTransactions)
+	bot.Bot.Handle("/delete", bot.DeleteTransactions)
 	bot.Bot.Handle(tb.OnText, bot.HandleMessage)
 	bot.Bot.Start()
 }
