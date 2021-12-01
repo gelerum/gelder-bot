@@ -27,7 +27,7 @@ func categoryIsValid(category string, kind string) bool {
 	if kind == "expenses" {
 		categories = expensesCategories
 	}
-	if kind == "expenses" {
+	if kind == "income" {
 		categories = incomeCategories
 	}
 	for _, item := range categories {
