@@ -1,6 +1,6 @@
 messages:
   start: "Gelder bot helps organize expenses and income\n\n/help - show help"
-  help: "/help - Help \n/categories - List of avaiable categories \n/balance - Total expenses and total income \n /transactions - List of transactions \n /del - Delete a transaction\n\nSend me a message to add expense or income Example: 150.99 food expenses"
+  help: "Gelder bot helps organize expenses and income\n/help - Help \n/categories - List of avaiable categories \n/balance - Total expenses and total income \n /transactions - List of transactions \n /del - Delete a transaction\n\nSend me a message to add expense or income Example: 150.99 food expenses"
   categories: "Expenses:\n   1. Food\n   2. Transportation\n   3. Entertainment\n   4. Household\n   5.Savings\n   6. Subscribtions\n   7. Others\n\nIncome: \n   1. Job\n   2. Freelancing\n   3. Buisness\n   4. Cashback\n   5. Others"
   initial_error: "Send me amount, category and type. Example: 150.99 food expenses"
   kind_error: "Use only expenses or income. Example: 150.99 food expenses"
