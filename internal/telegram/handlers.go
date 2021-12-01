@@ -58,7 +58,7 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 }
 
 func (b *bot) DeleteTransactions(m *tb.Message) {
-	transactionNumber := m.Text[4:]
+	transactionNumber := m.Text[5:]
 	_, err := strconv.Atoi(transactionNumber)
 	if err != nil {
 		log.Fatal(err)
