@@ -57,7 +57,10 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 	output += createTransactionHistory(income)
 	b.Bot.Send(m.Sender, output)
 }
+
 func (b *bot) DeleteTransactions(m *tb.Message) {
+	fmt.Print("begin")
+	b.Bot.Send(m.Sender, m.Text)
 	fmt.Print(m.Text)
 }
 
