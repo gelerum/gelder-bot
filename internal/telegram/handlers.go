@@ -66,6 +66,10 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 
 func (b *bot) DeleteTransactions(m *tb.Message) {
 	numberKind := strings.Fields(m.Text)
+	if len(numberKind) != 3 {
+		b.Bot.Send(m.Sender, b.messages.DelInitialError)
+		return
+	}
 	kind := numberKind[2]
 	initialTransactionNumber, err := strconv.Atoi(numberKind[1])
 	if err != nil {
@@ -90,12 +94,12 @@ func (b *bot) DeleteTransactions(m *tb.Message) {
 func (b *bot) HandleMessage(m *tb.Message) {
 	amountCategoryKind := strings.Fields(m.Text)
 	if len(amountCategoryKind) != 3 {
-		b.Bot.Send(m.Sender, b.messages.InitialError)
+		b.Bot.Send(m.Sender, b.messages.AddInitialError)
 		return
 	}
 	amount, err := strconv.ParseFloat(amountCategoryKind[0], 64)
 	if err != nil {
-		b.Bot.Send(m.Sender, b.messages.InitialError)
+		b.Bot.Send(m.Sender, b.messages.AddInitialError)
 		return
 	}
 	category := amountCategoryKind[1]

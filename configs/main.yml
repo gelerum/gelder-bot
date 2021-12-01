@@ -5,4 +5,5 @@ messages:
   initial_error: "Send me amount, category and type. Example: 150.99 food expenses"
   kind_error: "Use only expenses or income. Example: 150.99 food expenses"
   category_error: "Use only avaiable categories. Example: 150.99 food expenses. /categories - list of supported categories"
+  del_initial_error: "Send me number and type. Example: 1/del 1 expenses""
   number_error: "Use natural number. Example: /del 1 expenses"

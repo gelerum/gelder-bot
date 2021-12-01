@@ -13,13 +13,14 @@ type (
 		Client   Client
 	}
 	Messages struct {
-		Start         string `mapstructure:"start"`
-		Help          string `mapstructure:"help"`
-		Categories    string `mapstructure:"categories"`
-		InitialError  string `mapstructure:"initial_error"`
-		KindError     string `mapstructure:"kind_error"`
-		CategoryError string `mapstructure:"category_error"`
-		NumberError   string `mapstructure:"number_error"`
+		Start           string `mapstructure:"start"`
+		Help            string `mapstructure:"help"`
+		Categories      string `mapstructure:"categories"`
+		AddInitialError string `mapstructure:"add_initial_error"`
+		KindError       string `mapstructure:"kind_error"`
+		CategoryError   string `mapstructure:"category_error"`
+		NumberError     string `mapstructure:"number_error"`
+		DelInitialError string `mapstructure:"del_initial_error"`
 	}
 	Bot struct {
 		Port   string
