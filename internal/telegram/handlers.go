@@ -66,8 +66,8 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 
 func (b *bot) DeleteTransactions(m *tb.Message) {
 	numberKind := strings.Fields(m.Text)
-	kind := numberKind[1]
-	initialTransactionNumber, err := strconv.Atoi(numberKind[0])
+	kind := numberKind[2]
+	initialTransactionNumber, err := strconv.Atoi(numberKind[1])
 	if err != nil {
 		b.Bot.Send(m.Sender, b.messages.NumberError)
 		return
