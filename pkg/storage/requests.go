@@ -31,7 +31,7 @@ func (c Client) GetTransactions(chatID int) ([]Transactions, []Transactions) {
 }
 
 func (c Client) CreateUserDocument(chatID int) error {
-	count, err := c.coll.CountDocuments(c.ctx, bson.D{{"chatID", chatID}})
+	count, err := c.coll.CountDocuments(c.ctx, bson.M{"chatID": chatID})
 	if err != nil {
 		return err
 	}
@@ -43,15 +43,15 @@ func (c Client) CreateUserDocument(chatID int) error {
 }
 
 func (c Client) AddTransaction(chatID int, amount float64, category string, kind string) error {
-	filter := bson.D{{"chatID", chatID}}
+	filter := bson.M{"chatID": chatID}
 	update := bson.M{"$push": bson.M{kind: bson.D{{"category", category}, {"amount", amount}, {"creationDate", time.Now()}}}}
 	_, err := c.coll.UpdateOne(c.ctx, filter, update)
 	return err
 }
 
 func (c Client) DeleteTransaction(chatID int, transactionNumber string, kind string) error {
-	filter := bson.D{{"chatID", chatID}}
-	update := bson.M{"$pull": bson.M{kind: transactionNumber}}
+	filter := bson.M{"chatID": chatID}
+	update := bson.M{"$pull": kind + "." + transactionNumber}
 	_, err := c.coll.UpdateOne(c.ctx, filter, update)
 	return err
 }
