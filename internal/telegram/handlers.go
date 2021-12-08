@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gelerum/gelder-bot/internal/util"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
@@ -42,8 +43,8 @@ func (b *bot) HandleCategories(m *tb.Message) {
 
 func (b *bot) HandleBalance(m *tb.Message) {
 	expenses, income := b.client.GetTransactions(m.Sender.ID)
-	expensesSum := calculateTransactionsSum(expenses)
-	incomeSum := calculateTransactionsSum(income)
+	expensesSum := util.CalculateTransactionsSum(expenses)
+	incomeSum := util.CalculateTransactionsSum(income)
 	output := "Expenses: " + strconv.FormatFloat(expensesSum, 'f', -1, 64) + "\nIncome: " + strconv.FormatFloat(incomeSum, 'f', -1, 64)
 	_, err := b.Bot.Send(m.Sender, output)
 	if err != nil {
@@ -56,9 +57,9 @@ func (b *bot) HandleBalance(m *tb.Message) {
 func (b *bot) HandleTransactions(m *tb.Message) {
 	expenses, income := b.client.GetTransactions(m.Sender.ID)
 	output := "Expenses:\n"
-	output += createTransactionHistory(expenses)
+	output += util.CreateTransactionHistory(expenses)
 	output += "\nIncome:\n"
-	output += createTransactionHistory(income)
+	output += util.CreateTransactionHistory(income)
 	log.Print("Transactions list has been sent successfully")
 	b.Bot.Send(m.Sender, output)
 }
@@ -107,7 +108,7 @@ func (b *bot) HandleMessage(m *tb.Message) {
 		b.Bot.Send(m.Sender, b.messages.KindError)
 		return
 	}
-	if !categoryIsValid(category, kind) {
+	if !util.CategoryIsValid(category, kind) {
 		b.Bot.Send(m.Sender, b.messages.CategoryError)
 		return
 	}

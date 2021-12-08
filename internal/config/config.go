@@ -51,11 +51,14 @@ func InitConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	initEnvVars(&cfg)
+	return &cfg, nil
+}
+func initEnvVars(cfg *Config) {
 	cfg.Bot.Port = os.Getenv("PORT")
 	cfg.Bot.AppURL = os.Getenv("APP_URL")
 	cfg.Bot.Token = os.Getenv("BOT_TOKEN")
 	cfg.Client.URI = os.Getenv("MONGO_URI")
 	cfg.Client.Name = os.Getenv("DATABASE_NAME")
 	cfg.Client.Collection = os.Getenv("DATABASE_COLLECTION")
-	return &cfg, nil
 }

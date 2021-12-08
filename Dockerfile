@@ -1,4 +1,4 @@
-FROM golang:1.17.2-bullseye
+FROM golang:1.17.4-bullseye
 
 WORKDIR /gelder-bot
 

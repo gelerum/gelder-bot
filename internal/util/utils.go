@@ -1,4 +1,4 @@
-package telegram
+package util
 
 import (
 	"strconv"
@@ -6,7 +6,7 @@ import (
 	"github.com/gelerum/gelder-bot/pkg/storage"
 )
 
-func categoryIsValid(category string, kind string) bool {
+func CategoryIsValid(category string, kind string) bool {
 	expensesCategories := []string{
 		"food",
 		"transportation",
@@ -38,7 +38,7 @@ func categoryIsValid(category string, kind string) bool {
 	return false
 }
 
-func calculateTransactionsSum(transactions []storage.Transactions) float64 {
+func CalculateTransactionsSum(transactions []storage.Transactions) float64 {
 	var sum float64
 	for _, transaction := range transactions {
 		sum += transaction.Amount
@@ -46,7 +46,7 @@ func calculateTransactionsSum(transactions []storage.Transactions) float64 {
 	return sum
 }
 
-func createTransactionHistory(transactions []storage.Transactions) string {
+func CreateTransactionHistory(transactions []storage.Transactions) string {
 	var transactionList string
 	for n, transaction := range transactions {
 		category := transaction.Category
