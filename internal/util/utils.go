@@ -3,7 +3,7 @@ package util
 import (
 	"strconv"
 
-	"github.com/gelerum/gelder-bot/pkg/storage"
+	"github.com/gelerum/gelder-bot/internal/storage"
 )
 
 func CategoryIsValid(category string, kind string) bool {
