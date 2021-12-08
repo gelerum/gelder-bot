@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/gelerum/gelder-bot/internal/config"
+	"github.com/gelerum/gelder-bot/internal/storage"
 	"github.com/gelerum/gelder-bot/internal/telegram"
-	"github.com/gelerum/gelder-bot/pkg/storage"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
