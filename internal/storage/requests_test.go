@@ -68,7 +68,6 @@ func TestCreateUserDocument(t *testing.T) {
 		t.Error("Document was added")
 		return
 	}
-
 	// second case
 	err = c.CreateUserDocument(2)
 	if err != nil {
@@ -84,20 +83,10 @@ func TestCreateUserDocument(t *testing.T) {
 		t.Error("Document wasn't added")
 		return
 	}
-
 	// return collection to original state with delete added document
 	_, err = c.coll.DeleteOne(c.ctx, bson.M{"chatID": 2})
 	if err != nil {
 		t.Error("Collection wasn't returned to original state with delete added document", err)
-	}
-	count, err = c.coll.CountDocuments(c.ctx, bson.M{"chatID": 2})
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	if count > 0 {
-		t.Error("Collection wasn't returned to original state with delete added document")
-		return
 	}
 }
 
@@ -107,5 +96,38 @@ func TestAddTransaction(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	err = c.AddTransaction(1, 10, "food", "expenses")
+	err = c.AddTransaction(1, 20, "food", "expenses")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = c.AddTransaction(1, 30, "job", "income")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	expectedExpense := Transaction{
+		Category: "food",
+		Amount:   20,
+	}
+	expectedIncome := Transaction{
+		Category: "food",
+		Amount:   30,
+	}
+	expenses, income := c.GetTransactions(1)
+	if expenses[1] != expectedExpense {
+		t.Error("expenses[1] of c.GetTransactions(1) =", expenses[1])
+	}
+	if income[1] != expectedIncome {
+		t.Error("expenses[1] of c.GetTransactions(1) =", income[1])
+	}
+	// return collection to original state with delete added transactions
+	err = c.DeleteTransaction(1, "1", "expenses")
+	if err != nil {
+		t.Error("Collection wasn't returned to original state with delete added expense", err)
+	}
+	err = c.DeleteTransaction(1, "1", "income")
+	if err != nil {
+		t.Error("Collection wasn't returned to original state with delete added income", err)
+	}
 }
