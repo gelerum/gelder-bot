@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -34,18 +33,14 @@ func (c *Client) GetTransactions(chatID int) ([]Transaction, []Transaction) {
 func (c *Client) CreateUserDocument(chatID int) error {
 	count, err := c.coll.CountDocuments(c.ctx, bson.M{"chatID": chatID})
 	if err != nil {
-		fmt.Print(0)
 		return err
 	}
 	if count == 1 {
-		fmt.Print(1)
 		return nil
 	}
 	document := bson.D{{"chatID", chatID}, {"expenses", bson.A{}}, {"income", bson.A{}}}
 	_, err = c.coll.InsertOne(c.ctx, document)
-	fmt.Print(2)
 	if err != nil {
-		fmt.Print(3)
 		log.Fatal(err)
 		return err
 	}

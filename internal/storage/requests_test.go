@@ -52,13 +52,13 @@ func TestCreateUserDocument(t *testing.T) {
 		t.Error("client.CreateUserDocument(1) =", err)
 		return
 	}
-	count, err := c.coll.CountDocuments(c.ctx, bson.M{"chatID": 2})
+	count, err := c.coll.CountDocuments(c.ctx, bson.M{"chatID": 1})
 	if err != nil {
 		t.Error(err)
 		return
 	}
-	if count != 1 {
-		t.Error("Document wasn't added")
+	if count > 1 {
+		t.Error("Document was added")
 		return
 	}
 
