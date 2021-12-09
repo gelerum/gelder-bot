@@ -7,11 +7,13 @@ import (
 )
 
 type (
+	//
 	Config struct {
 		Messages Messages
 		Bot      Bot
 		Client   Client
 	}
+	// Bot messages structure
 	Messages struct {
 		Start           string `mapstructure:"start"`
 		Help            string `mapstructure:"help"`
@@ -22,11 +24,13 @@ type (
 		DelInitialError string `mapstructure:"del_initial_error"`
 		NumberError     string `mapstructure:"number_error"`
 	}
+	// Bot structure
 	Bot struct {
 		Port   string
 		AppURL string
 		Token  string
 	}
+	// Client structure
 	Client struct {
 		URI        string
 		Name       string
@@ -34,6 +38,7 @@ type (
 	}
 )
 
+// Read .yml config
 func ReadConfig(path string, cfg *Config) error {
 	viper.AddConfigPath(path)
 	viper.SetConfigName("main")
@@ -46,12 +51,14 @@ func ReadConfig(path string, cfg *Config) error {
 	return err
 }
 
+// Get bot environment variables
 func InitBotEnvVars(cfg *Config) {
 	cfg.Bot.Port = os.Getenv("PORT")
 	cfg.Bot.AppURL = os.Getenv("APP_URL")
 	cfg.Bot.Token = os.Getenv("BOT_TOKEN")
 }
 
+// Get client environment variables
 func InitClientEnvVars(cfg *Config) {
 	cfg.Client.URI = os.Getenv("MONGO_URI")
 	cfg.Client.Name = os.Getenv("DATABASE_NAME")

@@ -10,12 +10,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// MongoDB client structure
 type Client struct {
 	client *mongo.Client
 	coll   *mongo.Collection
 	ctx    context.Context
 }
 
+// Create new client. Connect to DB via URI and set collection and context
 func NewClient(cfg *config.Client) (*Client, error) {
 	newClient, err := mongo.NewClient(options.Client().ApplyURI(cfg.URI))
 	if err != nil {

@@ -9,6 +9,7 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
+// /start command handler
 func (b *bot) HandleStart(m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Start)
 	if err != nil {
@@ -23,6 +24,7 @@ func (b *bot) HandleStart(m *tb.Message) {
 	}
 }
 
+// /help command handler
 func (b *bot) HandleHelp(m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Help)
 	if err != nil {
@@ -32,6 +34,7 @@ func (b *bot) HandleHelp(m *tb.Message) {
 	log.Print("Help has been sent successfully")
 }
 
+// /categories command handler
 func (b *bot) HandleCategories(m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Categories)
 	if err != nil {
@@ -41,6 +44,7 @@ func (b *bot) HandleCategories(m *tb.Message) {
 	log.Print("Categories list has been sent successfully")
 }
 
+// /balance command handler
 func (b *bot) HandleBalance(m *tb.Message) {
 	expenses, income := b.client.GetTransactions(m.Sender.ID)
 	expensesSum := util.CalculateTransactionsSum(expenses)
@@ -54,6 +58,7 @@ func (b *bot) HandleBalance(m *tb.Message) {
 	log.Print("Balance has been sent successfully")
 }
 
+// /transactions command handler
 func (b *bot) HandleTransactions(m *tb.Message) {
 	expenses, income := b.client.GetTransactions(m.Sender.ID)
 	output := "Expenses:\n"
@@ -64,6 +69,7 @@ func (b *bot) HandleTransactions(m *tb.Message) {
 	b.Bot.Send(m.Sender, output)
 }
 
+// /del <transaction_number> command handler
 func (b *bot) DeleteTransactions(m *tb.Message) {
 	numberKind := strings.Fields(m.Text)
 	if len(numberKind) != 3 {
@@ -91,6 +97,7 @@ func (b *bot) DeleteTransactions(m *tb.Message) {
 	b.Bot.Send(m.Sender, "Transaction has been deleted successfully")
 }
 
+// Any text handler. Handle proper text as command add transaction
 func (b *bot) HandleMessage(m *tb.Message) {
 	amountCategoryKind := strings.Fields(m.Text)
 	if len(amountCategoryKind) != 3 {

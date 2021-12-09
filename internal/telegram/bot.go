@@ -8,6 +8,7 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
+// Telegram bot structure
 type bot struct {
 	Bot      *tb.Bot
 	client   *storage.Client
@@ -15,6 +16,7 @@ type bot struct {
 	messages *config.Messages
 }
 
+// Create new bot. Set configs and client
 func NewBot(cfg *config.Bot, msgs *config.Messages, clnt *storage.Client) (*bot, error) {
 	var (
 		port     = cfg.Port

@@ -6,6 +6,7 @@ import (
 	"github.com/gelerum/gelder-bot/internal/storage"
 )
 
+// Check if category is valid
 func CategoryIsValid(category string, kind string) bool {
 	expensesCategories := []string{
 		"food",
@@ -38,6 +39,7 @@ func CategoryIsValid(category string, kind string) bool {
 	return false
 }
 
+// Calculate transactions sum of transactions slice
 func CalculateTransactionsSum(transactions []storage.Transaction) float64 {
 	var sum float64
 	for _, transaction := range transactions {
@@ -46,6 +48,7 @@ func CalculateTransactionsSum(transactions []storage.Transaction) float64 {
 	return sum
 }
 
+// Create formatted transactions list of transactions slice
 func CreateTransactionHistory(transactions []storage.Transaction) string {
 	var transactionHistory string
 	for n, transaction := range transactions {
