@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -14,9 +13,8 @@ func TestNewClient(t *testing.T) {
 		Name:       os.Getenv("DATABASE_NAME"),
 		Collection: os.Getenv("DATABASE_TEST_COLLECTION"),
 	}
-	fmt.Println(cfg.URI)
 	_, err := NewClient(&cfg)
 	if err != nil {
-		t.Error(err)
+		t.Error(cfg.URI, cfg.Name, cfg.Collection)
 	}
 }
