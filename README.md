@@ -1,6 +1,6 @@
-### Gelder Bot
+# Gelder Bot
 
-Telegram [bot](t.me/gelderbot) that helps to organize expenses and income
+[Telegram bot](t.me/gelderbot) that helps to organize expenses and income
 
 ## License
 
