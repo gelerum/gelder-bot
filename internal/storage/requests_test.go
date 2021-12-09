@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gelerum/gelder-bot/internal/config"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestGetTransactions(t *testing.T) {
@@ -34,5 +35,53 @@ func TestGetTransactions(t *testing.T) {
 	expenses, income = client.GetTransactions(0)
 	if expenses != nil || income != nil {
 		t.Error("GetTransactions(0) =", expenses, income)
+	}
+}
+
+func TestCreateUserDocument(t *testing.T) {
+	cfg := config.Client{
+		URI:        os.Getenv("MONGO_URI"),
+		Name:       os.Getenv("DATABASE_NAME"),
+		Collection: os.Getenv("DATABASE_TEST_COLLECTION"),
+	}
+	c, _ := NewClient(&cfg)
+
+	// first case
+	err := c.CreateUserDocument(1)
+	if err != nil {
+		t.Error("client.CreateUserDocument(1) =", err)
+		return
+	}
+	count, err := c.coll.CountDocuments(c.ctx, bson.M{"chatID": 2})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if count != 1 {
+		t.Error("Document wasn't added")
+		return
+	}
+
+	// second case
+	err = c.CreateUserDocument(2)
+	if err != nil {
+		t.Error("client.CreateUserDocument(2) =", err)
+		return
+	}
+	count, err = c.coll.CountDocuments(c.ctx, bson.M{"chatID": 2})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if count != 1 {
+		t.Error("Document wasn't added")
+		return
+	}
+
+	// return collection to original state with delete added document
+	_, err = c.coll.DeleteOne(c.ctx, bson.M{"chatID": "2"})
+	if err != nil {
+		t.Error("collection wasn't returndto original state with delete added document", err)
+		return
 	}
 }

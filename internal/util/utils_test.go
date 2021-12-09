@@ -8,17 +8,25 @@ import (
 )
 
 func TestCategoryIsValid(t *testing.T) {
+	// first case
 	if CategoryIsValid("food", "expenses") != true {
 		t.Error(`CategoryIsValid("food", "expenses") = false`)
+		return
 	}
+	// second case
 	if CategoryIsValid("job", "income") != true {
 		t.Error(`CategoryIsValid("job", "income") = false`)
+		return
 	}
+	// third case
 	if CategoryIsValid("food", "income") != false {
 		t.Error(`CategoryIsValid("food", "income") = true`)
+		return
 	}
+	// fourth case
 	if CategoryIsValid("job", "expenses") != false {
 		t.Error(`CategoryIsValid("job", "expenses") = true`)
+		return
 	}
 }
 
