@@ -13,7 +13,7 @@ env:
   DATABASE_COLLECTION: "${{ secrets.DATABASE_COLLECTION }}"
   INITIAL_DIRECTORY: /home/runner/work/gelder-bot/gelder-bot/
   BOT_TOKEN: "${{ secrets.BOT_TOKEN }}"
-  jobs:
+jobs:
   test:
     runs-on: ubuntu-latest
     steps:
