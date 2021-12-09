@@ -21,5 +21,8 @@ func TestNewBot(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	NewBot(&cfg.Bot, &cfg.Messages, c)
+	_, err = NewBot(&cfg.Bot, &cfg.Messages, c)
+	if err != nil {
+		t.Error(err)
+	}
 }
