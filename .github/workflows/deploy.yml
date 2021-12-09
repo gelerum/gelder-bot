@@ -18,7 +18,8 @@ jobs:
         with:
           go-version: 1.17.4
       - name: Set environments
-        run:
+        run: |
+          echo ${{ secrets.MONGO_URI }}
           export MONGO_URI="${{ secrets.MONGO_URI }}"
           export DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
           export DATABASE_TEST_COLLECTION="${{ secrets.DATABASE_TEST_COLLECTION }}"
