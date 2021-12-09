@@ -73,14 +73,23 @@ func TestCreateUserDocument(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	if count != 1 {
+	if count == 0 {
 		t.Error("Document wasn't added")
 		return
 	}
 
 	// return collection to original state with delete added document
-	_, err = c.coll.DeleteOne(c.ctx, bson.M{"chatID": 5})
+	_, err = c.coll.DeleteOne(c.ctx, bson.M{"chatID": 2})
 	if err != nil {
 		t.Error("Collection wasn't returned to original state with delete added document", err)
+	}
+	count, err = c.coll.CountDocuments(c.ctx, bson.M{"chatID": 2})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if count > 0 {
+		t.Error("Collection wasn't returned to original state with delete added document")
+		return
 	}
 }
