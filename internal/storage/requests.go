@@ -9,7 +9,7 @@ import (
 )
 
 type (
-	Transactions struct {
+	Transaction struct {
 		Category     string    `bson:"category"`
 		Amount       float64   `bson:"amount"`
 		CreationDate time.Time `bson:"creationDate"`
@@ -18,12 +18,12 @@ type (
 	user struct {
 		ID       primitive.ObjectID `bson:"_id"`
 		ChatID   int                `bson:"chatID"`
-		Expenses []Transactions     `bson:"expenses"`
-		Income   []Transactions     `bson:"income"`
+		Expenses []Transaction      `bson:"expenses"`
+		Income   []Transaction      `bson:"income"`
 	}
 )
 
-func (c *Client) GetTransactions(chatID int) ([]Transactions, []Transactions) {
+func (c *Client) GetTransactions(chatID int) ([]Transaction, []Transaction) {
 	var doc user
 	filter := bson.M{"chatID": chatID}
 	c.coll.FindOne(c.ctx, filter).Decode(&doc)

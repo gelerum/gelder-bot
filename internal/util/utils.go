@@ -38,7 +38,7 @@ func CategoryIsValid(category string, kind string) bool {
 	return false
 }
 
-func CalculateTransactionsSum(transactions []storage.Transactions) float64 {
+func CalculateTransactionsSum(transactions []storage.Transaction) float64 {
 	var sum float64
 	for _, transaction := range transactions {
 		sum += transaction.Amount
@@ -46,13 +46,13 @@ func CalculateTransactionsSum(transactions []storage.Transactions) float64 {
 	return sum
 }
 
-func CreateTransactionHistory(transactions []storage.Transactions) string {
-	var transactionList string
+func CreateTransactionHistory(transactions []storage.Transaction) string {
+	var transactionHistory string
 	for n, transaction := range transactions {
 		category := transaction.Category
 		amount := transaction.Amount
 		creationDate := transaction.CreationDate
-		transactionList += strconv.Itoa(n+1) + ". " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
+		transactionHistory += strconv.Itoa(n+1) + ". " + creationDate.Format("Jan 02") + " | " + category + " | " + strconv.FormatFloat(amount, 'f', -1, 64) + "\n"
 	}
-	return transactionList
+	return transactionHistory
 }

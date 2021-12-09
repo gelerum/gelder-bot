@@ -9,7 +9,7 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-func (b *bot) HandleStart(m *tb.Message) {
+func HandleStart(b *bot, m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Start)
 	if err != nil {
 		log.Fatal(err)
@@ -70,7 +70,7 @@ func (b *bot) DeleteTransactions(m *tb.Message) {
 		b.Bot.Send(m.Sender, b.messages.DelInitialError)
 		return
 	}
-	kind := numberKind[2]
+	kind := strings.ToLower(numberKind[2])
 	initialTransactionNumber, err := strconv.Atoi(numberKind[1])
 	if err != nil {
 		b.Bot.Send(m.Sender, b.messages.NumberError)
@@ -102,7 +102,7 @@ func (b *bot) HandleMessage(m *tb.Message) {
 		b.Bot.Send(m.Sender, b.messages.AddInitialError)
 		return
 	}
-	category := amountCategoryKind[1]
+	category := strings.ToLower(amountCategoryKind[1])
 	kind := strings.ToLower(amountCategoryKind[2])
 	if kind != "expenses" && kind != "income" {
 		b.Bot.Send(m.Sender, b.messages.KindError)

@@ -25,7 +25,7 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	bot.Bot.Handle("/start", bot.HandleStart)
+	bot.Bot.Handle("/start", telegram.HandleStart)
 	bot.Bot.Handle("/help", bot.HandleHelp)
 	bot.Bot.Handle("/categories", bot.HandleCategories)
 	bot.Bot.Handle("/balance", bot.HandleBalance)
