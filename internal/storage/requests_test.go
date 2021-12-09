@@ -79,7 +79,7 @@ func TestCreateUserDocument(t *testing.T) {
 	}
 
 	// return collection to original state with delete added document
-	_, err = c.coll.DeleteOne(c.ctx, bson.M{"chatID": "2"})
+	_, err = c.coll.DeleteOne(c.ctx, bson.M{"chatID": 5})
 	if err != nil {
 		t.Error("Collection wasn't returned to original state with delete added document", err)
 	}
