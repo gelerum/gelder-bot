@@ -12,12 +12,7 @@ import (
 
 func main() {
 	var cfg config.Config
-	path, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-	err = config.ReadConfig(path+"/configs", &cfg)
+	err := config.ReadConfig(os.Getenv("INITIAL_DIRECTORY")+"/configs", &cfg)
 	if err != nil {
 		log.Fatal(err)
 		return

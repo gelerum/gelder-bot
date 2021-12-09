@@ -11,6 +11,7 @@ env:
   MONGO_URI: ${{ secrets.MONGO_URI }}
   DATABASE_NAME: "${{ secrets.DATABASE_NAME }}"
   DATABASE_TEST_COLLECTION: "${{ secrets.DATABASE_TEST_COLLECTION }}"
+  INITIAL_DIRECTORY: /home/runner/work/gelder-bot/gelder-bot/
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,6 +22,7 @@ jobs:
           go-version: 1.17.4
       - name: Set environments
         run:
+          export INITIAL_DIRECTORY="${{ env.INITIAL_DIRECTORY }}"
           export MONGO_URI="${{ env.MONGO_URI }}"
           export DATABASE_NAME="${{ env.DATABASE_NAME }}"
           export DATABASE_TEST_COLLECTION="${{ env.DATABASE_TEST_COLLECTION }}"

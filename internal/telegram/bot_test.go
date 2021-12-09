@@ -10,12 +10,7 @@ import (
 
 func TestNewBot(t *testing.T) {
 	var cfg config.Config
-	path, err := os.Getwd()
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	err = config.ReadConfig(path+"/configs", &cfg)
+	err := config.ReadConfig(os.Getenv("INITIAL_DIRECTORY")+"/configs", &cfg)
 	if err != nil {
 		t.Error(err)
 		return
