@@ -9,7 +9,7 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
-func HandleStart(b *bot, m *tb.Message) {
+func (b *bot) HandleStart(m *tb.Message) {
 	_, err := b.Bot.Send(m.Sender, b.messages.Start)
 	if err != nil {
 		log.Fatal(err)
