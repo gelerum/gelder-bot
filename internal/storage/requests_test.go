@@ -106,19 +106,11 @@ func TestAddTransaction(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	expectedExpense := Transaction{
-		Category: "food",
-		Amount:   20,
-	}
-	expectedIncome := Transaction{
-		Category: "food",
-		Amount:   30,
-	}
 	expenses, income := c.GetTransactions(1)
-	if expenses[1].Category != expectedExpense.Category || expenses[1].Amount != expectedExpense.Amount {
+	if expenses[1].Category != "food" || expenses[1].Amount != 20 {
 		t.Error("expenses[1] of c.GetTransactions(1) =", expenses[1])
 	}
-	if income[1].Category != expectedIncome.Category || income[1].Amount != expectedIncome.Amount {
+	if income[1].Category != "job" || income[1].Amount != 30 {
 		t.Error("expenses[1] of c.GetTransactions(1) =", income[1])
 	}
 	// return collection to original state with delete added transactions
