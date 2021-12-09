@@ -18,9 +18,7 @@ jobs:
         with:
           go-version: 1.17.4
       - name: Set environments
-        run: export MONGO_URI=${{ secrets.MONGO_URI }}
-        run: export DATABASE_NAME=${{ secrets.DATABASE_NAME }}
-        run: export DATABASE_TEST_COLLECTION=${{ secrets.DATABASE_TEST_COLLECTION }}
+        run: export MONGO_URI=${{ secrets.MONGO_URI }} && export DATABASE_NAME=${{ secrets.DATABASE_NAME }} && export DATABASE_TEST_COLLECTION=${{ secrets.DATABASE_TEST_COLLECTION }}
       - uses: actions/checkout@v2
       - name: Run Unit Tests
         run: go test -v ./...
