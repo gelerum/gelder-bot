@@ -24,6 +24,8 @@ jobs:
         run: go test -v ./...
 
   build-image:
+    requires:
+      - test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -53,10 +55,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-workflows:
-    jobs:
-      - test:
-      - build-image:
-          requires:
-            - test
