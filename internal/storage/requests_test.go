@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"os"
 	"testing"
 	"time"
 
@@ -9,21 +8,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func initClient() (*Client, error) {
-	cfg := config.Client{
-		URI:        os.Getenv("MONGO_URI"),
-		Name:       os.Getenv("DATABASE_NAME"),
-		Collection: os.Getenv("DATABASE_TEST_COLLECTION"),
-	}
-	c, err := NewClient(&cfg)
-	return c, err
-}
-
 func TestGetTransactions(t *testing.T) {
-	c, err := initClient()
+	var cfg config.Config
+	config.InitClientEnvVars(&cfg)
+	c, err := NewClient(&cfg.Client)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	expenseDate, _ := time.Parse("2006-01-02 15:04:05 -0700 MST", "2021-12-08 13:56:55.362 +0000 UTC")
 	expectedExpense := Transaction{
@@ -48,10 +38,11 @@ func TestGetTransactions(t *testing.T) {
 }
 
 func TestCreateUserDocument(t *testing.T) {
-	c, err := initClient()
+	var cfg config.Config
+	config.InitClientEnvVars(&cfg)
+	c, err := NewClient(&cfg.Client)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	// first case
 	err = c.CreateUserDocument(1)
@@ -91,10 +82,11 @@ func TestCreateUserDocument(t *testing.T) {
 }
 
 func TestAddTransaction(t *testing.T) {
-	c, err := initClient()
+	var cfg config.Config
+	config.InitClientEnvVars(&cfg)
+	c, err := NewClient(&cfg.Client)
 	if err != nil {
 		t.Error(err)
-		return
 	}
 	err = c.AddTransaction(1, 20, "food", "expenses")
 	if err != nil {

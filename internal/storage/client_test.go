@@ -1,19 +1,15 @@
 package storage
 
 import (
-	"os"
 	"testing"
 
 	"github.com/gelerum/gelder-bot/internal/config"
 )
 
 func TestNewClient(t *testing.T) {
-	cfg := config.Client{
-		URI:        os.Getenv("MONGO_URI"),
-		Name:       os.Getenv("DATABASE_NAME"),
-		Collection: os.Getenv("DATABASE_TEST_COLLECTION"),
-	}
-	_, err := NewClient(&cfg)
+	var cfg config.Config
+	config.InitClientEnvVars(&cfg)
+	_, err := NewClient(&cfg.Client)
 	if err != nil {
 		t.Error(err)
 	}

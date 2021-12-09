@@ -10,11 +10,14 @@ import (
 )
 
 func main() {
-	cfg, err := config.InitConfig()
+	var cfg config.Config
+	err := config.ReadConfig(&cfg)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
+	config.InitBotEnvVars(&cfg)
+	config.InitClientEnvVars(&cfg)
 	client, err := storage.NewClient(&cfg.Client)
 	if err != nil {
 		log.Fatal(err)
