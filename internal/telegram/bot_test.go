@@ -1,6 +1,7 @@
 package telegram
 
 import (
+	"os"
 	"testing"
 
 	"github.com/gelerum/gelder-bot/internal/config"
@@ -9,7 +10,12 @@ import (
 
 func TestNewBot(t *testing.T) {
 	var cfg config.Config
-	err := config.ReadConfig(&cfg)
+	path, err := os.Getwd()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	err = config.ReadConfig(path+"/configs", &cfg)
 	if err != nil {
 		t.Error(err)
 		return

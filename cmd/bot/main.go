@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/gelerum/gelder-bot/internal/config"
 	"github.com/gelerum/gelder-bot/internal/storage"
@@ -11,7 +12,12 @@ import (
 
 func main() {
 	var cfg config.Config
-	err := config.ReadConfig(&cfg)
+	path, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	err = config.ReadConfig(path+"/configs", &cfg)
 	if err != nil {
 		log.Fatal(err)
 		return

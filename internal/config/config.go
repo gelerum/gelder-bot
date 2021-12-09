@@ -34,15 +34,11 @@ type (
 	}
 )
 
-func ReadConfig(cfg *Config) error {
-	path, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	viper.AddConfigPath(path + "/configs")
+func ReadConfig(path string, cfg *Config) error {
+	viper.AddConfigPath(path)
 	viper.SetConfigName("main")
 	viper.SetConfigType("yaml")
-	err = viper.ReadInConfig()
+	err := viper.ReadInConfig()
 	if err != nil {
 		return err
 	}
