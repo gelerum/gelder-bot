@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   MONGO_URI: ${{ secrets.MONGO_URI }}
   DATABASE_NAME: "${{ secrets.DATABASE_NAME }}"
-  DATABASE_TEST_COLLECTION: "${{ secrets.DATABASE_COLLECTION }}"
+  DATABASE_COLLECTION: "${{ secrets.DATABASE_COLLECTION }}"
   INITIAL_DIRECTORY: /home/runner/work/gelder-bot/gelder-bot/
 jobs:
   test:
