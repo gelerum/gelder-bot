@@ -24,6 +24,7 @@ jobs:
         run: go test -v ./...
 
   build-image:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
