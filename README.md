@@ -1,5 +1,9 @@
 # Gelder Bot
 [Telegram bot](https://t.me/gelderbot) that helps to organize expenses and income
+## Stack
+- Go with [telebot](https://github.com/tucnak/telebot)
+- MongoDB
+- Docker
 ## Running
 ### Environment variables
 ```bash
@@ -11,7 +15,7 @@ MONGO_URI=<URI of your MongoDB database>
 INITIAL_DIRECTORY=<root of the project, like /gelder-bot>
 ```
 ### MongoDB
-I recommend you use [MongoDB Atlas](https://www.mongodb.com/atlas/database)
+I recommend use [MongoDB Atlas](https://www.mongodb.com/atlas/database)
 ### Use the already built container
 ```bash
 docker pull ghcr.io/gelerum/gelder-bot:main
